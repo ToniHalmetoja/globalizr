@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { MapContainer, TileLayer } from 'react-leaflet'
+const mapboxLink = 'https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoidG9uaWhhbG1ldG9qYSIsImEiOiJjbDBzN2NqYWQwMXNxM2JtaDZ3OGthYWQ1In0.ALPmMcLVezZiSLWzY3sdFA';
 
-const center = [0, -0]
-const zoom = 2
+const center = [30, -0]
+const zoom = 2.4
 
 export function DisplayPosition({ map }) {
   const [position, setPosition] = useState(map.getCenter())
@@ -35,10 +36,12 @@ export function DisplayMap() {
 
   const displayMap = useMemo(
     () => (
-      <MapContainer style={{ height: "90vh", width: "90vw"}} center={center} zoom={zoom} whenCreated={setMap}>
+      <MapContainer style={{ height: "85vh", width: "70vw"}} center={center} zoom={zoom} whenCreated={setMap} zoomSnap="0.2">
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            maxZoom="18"
+            id="mapbox.light"
+            url={mapboxLink}
         />
       </MapContainer>
     ),
