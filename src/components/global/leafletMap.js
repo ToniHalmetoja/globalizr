@@ -21,8 +21,15 @@ contributors,
 const center = [30, -0]
 const zoom = 2.4
 
-export function DisplayPosition({ map }) {
+export function DisplayPosition({ map, bounds }) {
+
+  console.log(bounds);
   const [position, setPosition] = useState(map.getCenter())
+
+  useEffect(() => {
+    if(bounds) map.fitBounds(bounds);
+  }, [bounds])
+
 
   const onClick = useCallback(() => {
     map.setView(center, zoom)
@@ -49,11 +56,16 @@ export function DisplayPosition({ map }) {
 
 export function DisplayMap() {
 
+  const [map, setMap] = useState(null)
+  const [bounds, setBounds] = useState(null)
+
+
   const countryStyle = {
     weight:1,
+    fillColor: "#263750"
   };
 
-  const onEachCountry = (country, layer) => {
+  const onEachCountry = (country, layer, map) => {
     const countryName = country.properties.ADMIN;
     layer.bindPopup(countryName)
     layer.on('mouseover', function () {
@@ -61,11 +73,13 @@ export function DisplayMap() {
         'fillColor': '#ffffff'
       });
     });
-    layer.on('mouseout', function () {
-      console.log("beep")
-      this.setStyle({
-        'fillColor': '#3388ff'
-      });
+    layer.on('mouseout', function (e) {
+      resetColor(e);
+    });
+    layer.on('click', function (e) {
+      var bounds = [e.target.getBounds()];
+      setBounds(bounds)
+      // map.fitBounds(bounds);
     });
   }
 
@@ -78,8 +92,12 @@ export function DisplayMap() {
     });
    }
 
- 
-  console.log(countries)
+   function resetColor(e) {
+    let layer = e.target;
+    layer.setStyle(countryStyle);
+   }
+
+
       function countryColor(d) {
         return d > 1000000 ? '#016c59' :
             d > 100000 ? '#1c9099' :
@@ -100,31 +118,24 @@ export function DisplayMap() {
         };
     }
 
-
-    // const borderLayer = L.geoJson(countryData, {
-    //   style: style,
-    // });
-
-  const [map, setMap] = useState(null)
-
   const displayMap = useMemo(
     () => (
-      <MapContainer style={{ height: "85vh", width: "70vw"}} center={center} zoom={zoom} whenCreated={setMap} zoomSnap="0.2">
+      <MapContainer style={{ height: "85vh", width: "70vw"}} center={center} zoom={zoom} whenCreated={setMap} zoomSnap="0.2" minZoom="2.4" maxZoom="6">
         {/* <TileLayer
             attribution = {attribution}
             maxZoom="18"
             id="mapbox.light"
             url={mapboxLink}
         /> */}
-        <GeoJSON style={countryStyle} data={countries.features} onEachFeature={onEachCountry}/>
+        {map ? <GeoJSON style={countryStyle} data={countries.features} onEachFeature={onEachCountry} map={map}/> : <GeoJSON style={countryStyle} data={countries.features} onEachFeature={onEachCountry}/>}
       </MapContainer>
     ),
-    [],
+    [map],
   )
 
   return (
     <div>
-      {map ? <DisplayPosition map={map} /> : null}
+      {map ? <DisplayPosition map={map} bounds={bounds} /> : null}
       {displayMap}
     </div>
   )
