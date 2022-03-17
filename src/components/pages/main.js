@@ -1,14 +1,28 @@
 import { useNavigate } from "react-router";
-import { Container, Button } from "react-bootstrap";
+import { Container, Button, Col, Row } from "react-bootstrap";
 import { DisplayMap } from "../global/leafletMap";
+import { Sidebar } from "../global/sidebar";
+import { useState, useEffect } from "react";
 
 
 
 export const Main = () => {
+
+    const [singleCountry, setSingleCountry] = useState(null)
+
+    useEffect(() => {
+        if(singleCountry) console.log(singleCountry.properties);
+      }, [singleCountry])
+
     return (
-        <Container>
-            <DisplayMap/>
-        </Container>
+        <Row>
+            <Col>
+                <Sidebar singleCountry={singleCountry}/>
+            </Col>
+            <Col>
+                <DisplayMap setSingleCountry={setSingleCountry}/>
+            </Col>
+        </Row>
 
     )
 }

@@ -18,12 +18,11 @@ contributors,
   Mapbox
   </a>`
 
-const center = [30, -0]
+const center = [45, -0]
 const zoom = 2.4
 
 export function DisplayPosition({ map, bounds }) {
 
-  console.log(bounds);
   const [position, setPosition] = useState(map.getCenter())
 
   useEffect(() => {
@@ -47,14 +46,11 @@ export function DisplayPosition({ map, bounds }) {
   }, [map, onMove])
 
   return (
-    <p>
-      latitude: {position.lat.toFixed(4)}, longitude: {position.lng.toFixed(4)}{' '}
-      <button onClick={onClick}>reset</button>
-    </p>
+    <></>
   )
 }
 
-export function DisplayMap() {
+export function DisplayMap({setSingleCountry}) {
 
   const [map, setMap] = useState(null)
   const [bounds, setBounds] = useState(null)
@@ -79,7 +75,7 @@ export function DisplayMap() {
     layer.on('click', function (e) {
       var bounds = [e.target.getBounds()];
       setBounds(bounds)
-      // map.fitBounds(bounds);
+      setSingleCountry(e.target.feature);
     });
   }
 
@@ -120,7 +116,7 @@ export function DisplayMap() {
 
   const displayMap = useMemo(
     () => (
-      <MapContainer style={{ height: "85vh", width: "70vw"}} center={center} zoom={zoom} whenCreated={setMap} zoomSnap="0.2" minZoom="2.4" maxZoom="6">
+      <MapContainer style={{ height: "95vh", width: "70vw"}} center={center} zoom={zoom} whenCreated={setMap} zoomSnap="0.2" minZoom="2.4" maxZoom="6">
         {/* <TileLayer
             attribution = {attribution}
             maxZoom="18"
