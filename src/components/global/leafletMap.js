@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState, useRef} from 'react'
 import { MapContainer, TileLayer, L, GeoJSON } from 'react-leaflet'
+import { Button } from 'react-bootstrap'
 import countries from "../data/countries.json"
 import "./mapStyles.css"
 
@@ -54,27 +55,48 @@ export function DisplayMap({setSingleCountry}) {
 
   const [map, setMap] = useState(null)
   const [bounds, setBounds] = useState(null)
+  const [selected, setSelected] = useState(null);
 
+  const stableReset = useStableCallback(resetColor);
 
   const countryStyle = {
     weight:1,
     fillColor: "#263750"
   };
 
-  const onEachCountry = (country, layer, map) => {
+  /*This feature is extremely hacky, but due to react-leaft deficiencies it's required. 
+  In short, geoJSON layers cannot access state. This stable callback allows for it.
+  Credit: https://gist.github.com/Shrugsy/5e898173c965e7642db8927636bedf7a */
+
+  function useStableCallback(callback) {
+    const callbackRef = useRef(callback);
+    callbackRef.current = callback;
+  
+    const stableCallback = useCallback((...args) => {
+      return callbackRef.current(...args);
+    }, []);
+  
+    return stableCallback;
+  }
+
+  function onEachCountry (country, layer, map) {
+    
     const countryName = country.properties.ADMIN;
-    layer.bindPopup(countryName)
     layer.on('mouseover', function () {
       this.setStyle({
         'fillColor': '#ffffff'
       });
     });
     layer.on('mouseout', function (e) {
-      resetColor(e);
+      stableReset(e)
     });
     layer.on('click', function (e) {
+      this.setStyle({
+        'fillColor': '#ffffff'
+      });
       var bounds = [e.target.getBounds()];
       setBounds(bounds)
+      setSelected(e.target);
       setSingleCountry(e.target.feature);
     });
   }
@@ -89,8 +111,10 @@ export function DisplayMap({setSingleCountry}) {
    }
 
    function resetColor(e) {
-    let layer = e.target;
-    layer.setStyle(countryStyle);
+     if(selected != e.target){
+      let layer = e.target;
+      layer.setStyle(countryStyle);
+    }
    }
 
 
@@ -130,7 +154,8 @@ export function DisplayMap({setSingleCountry}) {
   )
 
   return (
-    <div>
+    <div className="map-container">
+      <Button className="reset-button" onClick={() => map.setView(center, zoom)}>Reset map view</Button>
       {map ? <DisplayPosition map={map} bounds={bounds} /> : null}
       {displayMap}
     </div>

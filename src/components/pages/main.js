@@ -10,10 +10,6 @@ export const Main = () => {
 
     const [singleCountry, setSingleCountry] = useState(null)
 
-    useEffect(() => {
-        if(singleCountry) console.log(singleCountry.properties);
-      }, [singleCountry])
-
     return (
         <Row>
             <Col>

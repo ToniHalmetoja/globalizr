@@ -8,3 +8,10 @@
     border: 3px solid black;
     width:20vw;
 }
+
+.reset-button{
+    position:absolute;
+    top: 100px;
+    left: 35px;
+    z-index:10;
+}
