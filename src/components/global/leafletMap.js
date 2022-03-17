@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState, useRef} from 'react'
 import { MapContainer, TileLayer, L, GeoJSON } from 'react-leaflet'
 import { Button } from 'react-bootstrap'
+import { usePrevious } from "./usePrevious"
 import countries from "../data/countries.json"
 import "./mapStyles.css"
 
@@ -56,6 +57,7 @@ export function DisplayMap({setSingleCountry}) {
   const [map, setMap] = useState(null)
   const [bounds, setBounds] = useState(null)
   const [selected, setSelected] = useState(null);
+  const prevSelected = usePrevious(selected)
 
   const stableReset = useStableCallback(resetColor);
 
@@ -63,6 +65,12 @@ export function DisplayMap({setSingleCountry}) {
     weight:1,
     fillColor: "#263750"
   };
+
+  useEffect(() => {
+    if(prevSelected != undefined && selected != prevSelected){
+      prevSelected.setStyle(countryStyle)
+    }
+  }, [selected])
 
   /*This feature is extremely hacky, but due to react-leaft deficiencies it's required. 
   In short, geoJSON layers cannot access state. This stable callback allows for it.
@@ -112,8 +120,7 @@ export function DisplayMap({setSingleCountry}) {
 
    function resetColor(e) {
      if(selected != e.target){
-      let layer = e.target;
-      layer.setStyle(countryStyle);
+      e.target.setStyle(countryStyle);
     }
    }
 
