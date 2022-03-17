@@ -67,7 +67,7 @@ export function DisplayMap({setSingleCountry}) {
   };
 
   useEffect(() => {
-    if(prevSelected != undefined && selected != prevSelected){
+    if(prevSelected !== undefined && selected != prevSelected){
       prevSelected.setStyle(countryStyle)
     }
   }, [selected])
@@ -119,7 +119,7 @@ export function DisplayMap({setSingleCountry}) {
    }
 
    function resetColor(e) {
-     if(selected != e.target){
+     if(selected !== e.target){
       e.target.setStyle(countryStyle);
     }
    }
