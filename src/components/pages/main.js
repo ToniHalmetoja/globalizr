@@ -1,12 +1,13 @@
-import { useNavigate } from "react-router";
-import { Container, Button, Col, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
+import { MainContent } from "../global/mapStyles";
 import { DisplayMap } from "../global/leafletMap";
 import { Sidebar } from "../global/sidebar";
-import { useState, useEffect } from "react";
-
-
+import { useState } from "react";
+import { useMediaQuery } from 'react-responsive'
 
 export const Main = () => {
+
+    const isBigScreen = useMediaQuery({ query: '(min-width: 768px)' })
 
     const [singleCountry, setSingleCountry] = useState(null)
 
@@ -15,9 +16,9 @@ export const Main = () => {
             <Col>
                 <Sidebar singleCountry={singleCountry}/>
             </Col>
-            <Col>
-                <DisplayMap setSingleCountry={setSingleCountry}/>
-            </Col>
+            <MainContent>
+                <DisplayMap setSingleCountry={setSingleCountry} isBigScreen={isBigScreen}/>
+            </MainContent>
         </Row>
 
     )

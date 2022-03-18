@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useMemo, useState, useRef} from 'react'
-import { MapContainer, TileLayer, L, GeoJSON } from 'react-leaflet'
-import { Button } from 'react-bootstrap'
+import { MapContainer, GeoJSON } from 'react-leaflet'
+
 import { usePrevious } from "./usePrevious"
+import { ResetButton } from './mapStyles.js'
+
 import countries from "../data/countries.json"
-import "./mapStyles.css"
+import "./mapStyles.js"
 
 const mapboxLink = 'https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoidG9uaWhhbG1ldG9qYSIsImEiOiJjbDBzN2NqYWQwMXNxM2JtaDZ3OGthYWQ1In0.ALPmMcLVezZiSLWzY3sdFA';
 const attribution = `
@@ -52,22 +54,22 @@ export function DisplayPosition({ map, bounds }) {
   )
 }
 
-export function DisplayMap({setSingleCountry}) {
+export function DisplayMap({setSingleCountry, isBigScreen}) {
 
   const [map, setMap] = useState(null)
   const [bounds, setBounds] = useState(null)
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(null)
   const prevSelected = usePrevious(selected)
 
-  const stableReset = useStableCallback(resetColor);
+  const stableReset = useStableCallback(resetColor)
 
   const countryStyle = {
     weight:1,
     fillColor: "#263750"
-  };
+  }
 
   useEffect(() => {
-    if(prevSelected !== undefined && selected != prevSelected){
+    if(prevSelected && selected !== prevSelected){
       prevSelected.setStyle(countryStyle)
     }
   }, [selected])
@@ -147,7 +149,7 @@ export function DisplayMap({setSingleCountry}) {
 
   const displayMap = useMemo(
     () => (
-      <MapContainer style={{ height: "95vh", width: "70vw"}} center={center} zoom={zoom} whenCreated={setMap} zoomSnap="0.2" minZoom="2.4" maxZoom="6">
+      <MapContainer center={center} zoom={zoom} whenCreated={setMap} zoomSnap="0.2" minZoom="2.4" maxZoom="6">
         {/* <TileLayer
             attribution = {attribution}
             maxZoom="18"
@@ -157,12 +159,12 @@ export function DisplayMap({setSingleCountry}) {
         {map ? <GeoJSON style={countryStyle} data={countries.features} onEachFeature={onEachCountry} map={map}/> : <GeoJSON style={countryStyle} data={countries.features} onEachFeature={onEachCountry}/>}
       </MapContainer>
     ),
-    [map],
+    [map, isBigScreen],
   )
 
   return (
     <div className="map-container">
-      <Button className="reset-button" onClick={() => map.setView(center, zoom)}>Reset map view</Button>
+      <ResetButton className="reset-button" onClick={() => map.setView(center, zoom)}>Reset map view</ResetButton>
       {map ? <DisplayPosition map={map} bounds={bounds} /> : null}
       {displayMap}
     </div>
