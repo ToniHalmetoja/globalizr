@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Container, Col } from "react-bootstrap"
+import { Container, Col, FormSelect } from "react-bootstrap"
 import { XSquareFill } from 'react-bootstrap-icons'
 
 
@@ -27,11 +27,13 @@ export const MainContent = styled(Col)`
 `
 
 export const SidebarStyled = styled(Container)`
+    margin-left:1vw;
     border: 3px solid black;
     width: 95vw;
     height: 50vh;
     margin-bottom: 1vh;
     @media (min-width: 768px) {
+        margin-left:0;
         height:95vh;
         width:20vw;
         margin-bottom: 0;
@@ -47,4 +49,19 @@ export const ResetButton = styled(XSquareFill)`
     top: 100px;
     left: 30px;
     z-index:1010;
-    `
+`
+
+export const ModalLauncher = styled(Container)`
+    border: 1px solid black;    
+`
+
+export const SearchForm = styled(FormSelect)`
+    border: 1px solid black;    
+    background-color: black;
+    color: #aaaaaa;
+    font-size: 0.8em;
+`
+
+export const InfoContainer = styled(Container)`
+    
+`

@@ -1,4 +1,5 @@
 import { SidebarStyled } from "./mapStyles.js"
+import { AddModal } from "./modalLauncher.js"
 
 export function Sidebar({singleCountry}) {
 
@@ -8,6 +9,7 @@ export function Sidebar({singleCountry}) {
         <SidebarStyled>
             <h1>Welcome to GlobalizR</h1>
             {singleCountry ? <p>Currently selected: {singleCountry.properties.ADMIN} </p>: <p>Click a country to add experiences</p>}
+            {singleCountry ? <AddModal countryName={singleCountry.properties.ADMIN}/> : <p></p>}
         </SidebarStyled>
     )
 }

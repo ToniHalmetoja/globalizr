@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useMemo, useState, useRef} from 'react'
+import { useCallback, useEffect, useMemo, useState} from 'react'
 import { MapContainer, GeoJSON } from 'react-leaflet'
 
-import { usePrevious } from "./usePrevious"
+import { usePrevious } from "../functions/usePrevious"
+import { useStableCallback } from '../functions/useStableCalllback'
 import { ResetButton } from './mapStyles.js'
 
 import countries from "../data/countries.json"
@@ -65,7 +66,8 @@ export function DisplayMap({setSingleCountry, isBigScreen}) {
 
   const countryStyle = {
     weight:1,
-    fillColor: "#263750"
+    fillColor: "#263750",
+    color: "#3284f8"
   }
 
   useEffect(() => {
@@ -74,26 +76,13 @@ export function DisplayMap({setSingleCountry, isBigScreen}) {
     }
   }, [selected])
 
-  /*This feature is extremely hacky, but due to react-leaft deficiencies it's required. 
-  In short, geoJSON layers cannot access state. This stable callback allows for it.
-  Credit: https://gist.github.com/Shrugsy/5e898173c965e7642db8927636bedf7a */
-
-  function useStableCallback(callback) {
-    const callbackRef = useRef(callback);
-    callbackRef.current = callback;
-  
-    const stableCallback = useCallback((...args) => {
-      return callbackRef.current(...args);
-    }, []);
-  
-    return stableCallback;
-  }
-
   function onEachCountry (country, layer, map) {
     
     const countryName = country.properties.ADMIN;
     layer.on('mouseover', function () {
       this.setStyle({
+        'weight' : 2,
+        'color' : "#ffffff",
         'fillColor': '#ffffff'
       });
     });
