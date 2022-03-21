@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Container, Col, FormSelect } from "react-bootstrap"
+import { Container, Col, FormSelect, Button } from "react-bootstrap"
 import { XSquareFill } from 'react-bootstrap-icons'
 
 
@@ -53,6 +53,8 @@ export const ResetButton = styled(XSquareFill)`
 
 export const ModalLauncher = styled(Container)`
     border: 1px solid black;    
+    padding:1em;
+    margin-top:1em;
 `
 
 export const SearchForm = styled(FormSelect)`
@@ -62,6 +64,16 @@ export const SearchForm = styled(FormSelect)`
     font-size: 0.8em;
 `
 
+export const InformationBox = styled(Container)`
+    border: 1px solid black;    
+    margin-top:1em;
+    padding:1em;
+`
+
 export const InfoContainer = styled(Container)`
+    
+`
+export const GeneralButton = styled(Button)`
+margin-top:1em;
     
 `
