@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react"
+import axios from "axios"
 
 import { SidebarStyled, GeneralButton } from "./mapStyles.js"
 import { AddModal } from "./modalLauncher.js"
 import { Informer } from "./informer.js"
 import { Recommender } from "../modals/recommenderModal.js"
 import { Adder } from "../modals/addModal.js"
+
+const fetchURL = "localhost:3000";
 
 export function Sidebar({singleCountry}) {
 
@@ -14,6 +17,17 @@ export function Sidebar({singleCountry}) {
 
     /* Fetch content for this from DB, render out. Prevent user from selecting new until fetch complete? */
 
+    useEffect(() => {
+        axios.post('http://localhost:3000/ping', {
+            firstName: 'Finn',
+            lastName: 'Williams'
+          })
+          .then((response) => {
+            console.log(response);
+          }, (error) => {
+            console.log(error);
+          });
+    },[])
     
     function handleSelect(e){
         switch(e.target.value){
