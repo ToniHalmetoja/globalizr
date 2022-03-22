@@ -9,17 +9,11 @@ import { Main } from "./components/pages/main"
 
 function App() {
 
+  const [token, setToken] = useState();
   const navigate = useNavigate()
 
-  const [token, setToken] = useState();
-
-  if(token){
-    console.log(token)
-    navigate("/main");
-  }
-
   useEffect(()=>{
-    console.log(token)
+    if(token) navigate("/main");
   }, [token])
 
   return (
@@ -27,7 +21,16 @@ function App() {
       <header className="App-header">
               <Routes>
                 <Route path="/" element={<Login setToken={setToken}/>}/>
-                <Route path="/main" element={<Main token={token}/>}/>
+                {
+                  token ?
+                      [ 
+                          <Route key="123" path="/main" element={<Main token={token}/>}/>
+                      ]
+                      :
+                      null
+                }
+                <Route path={"*"} element={<Login setToken={setToken}/>}/>
+
               </Routes>
       </header>
     </div>

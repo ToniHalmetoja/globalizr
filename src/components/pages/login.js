@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Container, Button, Form } from "react-bootstrap";
 import { LoginForm, LoginButton } from "./loginStyles";
@@ -8,30 +8,28 @@ export const Login = ({setToken}) => {
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    // const [token, setToken] = useState();
 
-    async function login (evt) {
+    function login (evt) {
+        evt.preventDefault();
         let loginInfo = {
             "userName": userName,
             "password": password
         }
         axios.post(`http://localhost:3000/login`, loginInfo)
             .then((res) => {
-                return res.data
+                setToken(res.data.id)
             })
     }
 
-    const handleLogin = async (evt) => {
-        evt.preventDefault();
-        const token = await login();
-        setToken(token);
-    }
+
 
     return (
         <Container>
             <h1>GlobalizR</h1>
             <h2>Your caleidoscope of experiences</h2>
             <Container className="d-flex justify-content-center">
-                <Form onSubmit={(e) => handleLogin(e)}>
+                <Form onSubmit={(e) => login(e)}>
                     <Form.Label>
                         Email address
                     </Form.Label>
@@ -45,7 +43,7 @@ export const Login = ({setToken}) => {
                     <LoginButton type="submit">Login!</LoginButton>
                 </Form>
             </Container>
-            <Button onClick={(evt) => handleLogin(evt)}>Log into GLOBALIZR!</Button>
+            <Button onClick={(evt) => login(evt)}>Log into GLOBALIZR!</Button>
         </Container>
 
     )
