@@ -12,6 +12,7 @@ export const Adder = ({countryname, type, cancel, token}) => {
     const [author, setAuthor] = useState("");
     const [text, setText] = useState("");
     const [failure, setFailure] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     function submitNewExperience(evt){
         evt.preventDefault();
@@ -64,7 +65,9 @@ export const Adder = ({countryname, type, cancel, token}) => {
         if(valid===true){
             axios.post(`http://localhost:3000/add`, payload)
             .then((res) => {
-                console.log(res.data)
+                if(res.data === "OK!"){
+                    setSuccess(true)
+                }
             })
         }
         else{setFailure(true)}
@@ -82,8 +85,8 @@ export const Adder = ({countryname, type, cancel, token}) => {
                 {type === "Met someone from " ?
                     <CenterContainer>
                     <Form onSubmit={(e) => submitNewExperience(e)}>
-                        <EntryForm type="text" placeholder="Name" onChange={(e) => setName(e.target.value)}/>
                         <EntryForm type="date" placeholder="Date"  onChange={(e) => setDate(e.target.value)}/>
+                        <EntryForm type="text" placeholder="Name" onChange={(e) => setName(e.target.value)}/>
                         <SubmitButton type="submit">Submit</SubmitButton>
                         <SubmitButton variant="danger" onClick={() => cancel()}>Exit</SubmitButton>
 
@@ -91,9 +94,48 @@ export const Adder = ({countryname, type, cancel, token}) => {
                 </CenterContainer>
                 : <p></p>
                 }
+                {type === "A visit to " ?
+                    <CenterContainer>
+                    <Form onSubmit={(e) => submitNewExperience(e)}>
+                        <EntryForm type="date" placeholder="Date"  onChange={(e) => setDate(e.target.value)}/>
+                        <EntryForm type="text" placeholder="Place name" onChange={(e) => setName(e.target.value)}/>
+                        <SubmitButton type="submit">Submit</SubmitButton>
+                        <SubmitButton variant="danger" onClick={() => cancel()}>Exit</SubmitButton>
+                    </Form>
+                </CenterContainer>
+                : <p></p>
+                }
+                {type === "Read a book from " ?
+                    <CenterContainer>
+                    <Form onSubmit={(e) => submitNewExperience(e)}>
+                        <EntryForm type="date" placeholder="Date"  onChange={(e) => setDate(e.target.value)}/>
+                        <EntryForm type="text" placeholder="Title" onChange={(e) => setTitle(e.target.value)}/>
+                        <EntryForm type="text" placeholder="Author" onChange={(e) => setAuthor(e.target.value)}/>
+                        <SubmitButton type="submit">Submit</SubmitButton>
+                        <SubmitButton variant="danger" onClick={() => cancel()}>Exit</SubmitButton>
+
+                    </Form>
+                </CenterContainer>
+                : <p></p>
+                }
+                {type === "Ate a dish from " ?
+                    <CenterContainer>
+                    <Form onSubmit={(e) => submitNewExperience(e)}>
+                    <Row><EntryForm type="text" placeholder="Name" onChange={(e) => setName(e.target.value)}/></Row>
+                        <Row><EntryForm type="date" placeholder="Date"  onChange={(e) => setDate(e.target.value)}/></Row>
+                        <Row><EntryForm as="textarea" type="text" placeholder="Recipe" cols={25} onChange={(e) => setText(e.target.value)}/></Row>
+                        <SubmitButton type="submit">Submit</SubmitButton>
+                        <SubmitButton variant="danger" onClick={() => cancel()}>Exit</SubmitButton>
+
+                    </Form>
+                </CenterContainer>
+                : <p></p>
+                }
+                
             </ModalBody>
             <DarkModalFooter className="text-center d-flex justify-content-center">
-                {failure ? <h1>Please fill in all fields!</h1> : <h1></h1>}
+                {failure ? <span>Please fill in all fields!</span> : <h1></h1>}
+                {success ? <><span>Your experience was successfully added!</span><span>Add another or close the modal.</span></> : <h1></h1>}
             </DarkModalFooter>
         </GenericModal>
     )
