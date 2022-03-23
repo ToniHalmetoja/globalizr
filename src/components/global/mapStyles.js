@@ -77,3 +77,10 @@ export const GeneralButton = styled(Button)`
 margin-top:1em;
     
 `
+
+export const LogoutButton = styled(Button)`
+margin-top:1em;
+position: absolute;
+bottom:1em;
+left:40%;    
+`

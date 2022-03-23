@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useMediaQuery } from 'react-responsive'
 
-export function Main ({token}) {
+export function Main ({token, logout}) {
 
     const navigate = useNavigate()
 
@@ -23,7 +23,7 @@ export function Main ({token}) {
         <>
         <Row>
             <Col>
-                <Sidebar singleCountry={singleCountry}/>
+                <Sidebar singleCountry={singleCountry} logout={logout}/>
             </Col>
             <MainContent>
                 <DisplayMap setSingleCountry={setSingleCountry} isBigScreen={isBigScreen}/>

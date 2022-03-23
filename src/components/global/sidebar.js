@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 
-import { SidebarStyled, GeneralButton } from "./mapStyles.js"
+import { Container } from "react-bootstrap"
+import { SidebarStyled, GeneralButton, LogoutButton } from "./mapStyles.js"
 import { AddModal } from "./modalLauncher.js"
 import { Informer } from "./informer.js"
 import { Recommender } from "../modals/recommenderModal.js"
@@ -9,7 +10,7 @@ import { Adder } from "../modals/addModal.js"
 
 const fetchURL = "localhost:3000";
 
-export function Sidebar({singleCountry}) {
+export function Sidebar({singleCountry, logout}) {
 
     const [showRecModal, setShowRecModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
@@ -63,6 +64,9 @@ export function Sidebar({singleCountry}) {
             {singleCountry ? <Informer countryname={singleCountry.properties.ADMIN}/> : <p></p>}
             {singleCountry ? <AddModal select={handleSelect} countryname={singleCountry.properties.ADMIN}/> : <span>...and to show previous ones!</span>}
             {singleCountry ? <GeneralButton onClick={() => setShowRecModal(true)}>Need ideas? Click here!</GeneralButton> : <span></span>}
+            <Container>
+            <LogoutButton onClick={() => logout()}>Log Out!</LogoutButton>
+            </Container>
         </SidebarStyled>
         {showRecModal ? <Recommender countryname={singleCountry.properties.ADMIN} cancel={()=>setShowRecModal(false)}/> : <span></span>}
         {showAddModal ? <Adder countryname={singleCountry.properties.ADMIN} type={addType} cancel={()=>setShowAddModal(false)}/> : <span></span>}

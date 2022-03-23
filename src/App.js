@@ -10,11 +10,26 @@ import { Main } from "./components/pages/main"
 function App() {
 
   const [token, setToken] = useState();
+  const [loaded, setLoaded] = useState(false);
   const navigate = useNavigate()
 
   useEffect(()=>{
-    if(token) navigate("/main");
+    if(localStorage.getItem("usertoken")){
+      setToken(localStorage.getItem("usertoken"));
+    }  
+    
+    if(token){
+      navigate("/main");
+      localStorage.setItem("usertoken", token)
+    }
+
+    setLoaded(true);
   }, [token])
+
+  function logout () {
+    localStorage.removeItem("usertoken");
+    navigate("/");
+  }
 
   return (
     <div className="App">
@@ -24,12 +39,12 @@ function App() {
                 {
                   token ?
                       [ 
-                          <Route key="123" path="/main" element={<Main token={token}/>}/>
+                          <Route key="123" path="/main" element={<Main token={token} logout={logout}/>}/>
                       ]
                       :
                       null
                 }
-                <Route path={"*"} element={<Login setToken={setToken}/>}/>
+                {loaded && <Route path={"*"} element={<Login setToken={setToken}/>}/>}
 
               </Routes>
       </header>
