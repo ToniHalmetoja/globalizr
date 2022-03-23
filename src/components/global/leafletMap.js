@@ -55,7 +55,7 @@ export function DisplayPosition({ map, bounds }) {
   )
 }
 
-export function DisplayMap({setSingleCountry, isBigScreen}) {
+export function DisplayMap({setSingleCountry, isBigScreen, token}) {
 
   const [map, setMap] = useState(null)
   const [bounds, setBounds] = useState(null)

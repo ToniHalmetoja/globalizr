@@ -8,8 +8,6 @@ import { useMediaQuery } from 'react-responsive'
 
 export function Main ({token, logout}) {
 
-    const navigate = useNavigate()
-
     // useEffect(()=>{
     //     console.log(token);
     //     if(!token) navigate("/");
@@ -23,10 +21,10 @@ export function Main ({token, logout}) {
         <>
         <Row>
             <Col>
-                <Sidebar singleCountry={singleCountry} logout={logout}/>
+                <Sidebar singleCountry={singleCountry} logout={logout} token={token}/>
             </Col>
             <MainContent>
-                <DisplayMap setSingleCountry={setSingleCountry} isBigScreen={isBigScreen}/>
+                <DisplayMap setSingleCountry={setSingleCountry} isBigScreen={isBigScreen} token={token}/>
             </MainContent>
         </Row>
         </>

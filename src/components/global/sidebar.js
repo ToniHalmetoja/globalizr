@@ -10,7 +10,7 @@ import { Adder } from "../modals/addModal.js"
 
 const fetchURL = "localhost:3000";
 
-export function Sidebar({singleCountry, logout}) {
+export function Sidebar({singleCountry, logout, token}) {
 
     const [showRecModal, setShowRecModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
@@ -61,11 +61,11 @@ export function Sidebar({singleCountry, logout}) {
         <SidebarStyled>
             <h1>Welcome to GlobalizR</h1>
             {singleCountry ? <span>Currently selected: {singleCountry.properties.ADMIN} </span>: <span>Click a country to add experiences...</span>}
-            {singleCountry ? <Informer countryname={singleCountry.properties.ADMIN}/> : <p></p>}
-            {singleCountry ? <AddModal select={handleSelect} countryname={singleCountry.properties.ADMIN}/> : <span>...and to show previous ones!</span>}
+            {singleCountry ? <Informer countryname={singleCountry.properties.ADMIN} token={token}/> : <p></p>}
+            {singleCountry ? <AddModal select={handleSelect} countryname={singleCountry.properties.ADMIN} token={token}/> : <span>...and to show previous ones!</span>}
             {singleCountry ? <GeneralButton onClick={() => setShowRecModal(true)}>Need ideas? Click here!</GeneralButton> : <span></span>}
             <Container>
-            <LogoutButton onClick={() => logout()}>Log Out!</LogoutButton>
+                <LogoutButton variant="danger" onClick={() => logout()}>Log Out!</LogoutButton>
             </Container>
         </SidebarStyled>
         {showRecModal ? <Recommender countryname={singleCountry.properties.ADMIN} cancel={()=>setShowRecModal(false)}/> : <span></span>}
