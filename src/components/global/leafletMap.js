@@ -5,6 +5,8 @@ import { usePrevious } from "../functions/usePrevious"
 import { useStableCallback } from '../functions/useStableCalllback'
 import { ResetButton } from './mapStyles.js'
 
+import axios from "axios"
+
 import countries from "../data/countries.json"
 import "./mapStyles.js"
 
@@ -60,6 +62,8 @@ export function DisplayMap({setSingleCountry, isBigScreen, token}) {
   const [map, setMap] = useState(null)
   const [bounds, setBounds] = useState(null)
   const [selected, setSelected] = useState(null)
+  const [allExperiences, setAllExperiences] = useState(null)
+  const [selectedExperiences, setSelectedExperiences] = useState(null)
   const prevSelected = usePrevious(selected)
 
   const stableReset = useStableCallback(resetColor)
@@ -74,7 +78,33 @@ export function DisplayMap({setSingleCountry, isBigScreen, token}) {
     if(prevSelected && selected !== prevSelected){
       prevSelected.setStyle(countryStyle)
     }
+    if(selected){ 
+      let payload = {
+        "user":localStorage.getItem("usertoken"),
+        "country":selected.feature.properties.ADMIN
+      }
+      axios.post(`http://localhost:3000/getone`, payload)
+              .then((res) => {
+                  if(res.data){
+                      console.log(res.data[0].experiences);
+                      setSelectedExperiences(res.data[0].experiences)
+                  }
+              })
+            }
   }, [selected])
+
+  useEffect(() => {
+    let payload = {
+      "user":localStorage.getItem("usertoken"),
+    }
+    axios.post(`http://localhost:3000/getall`, payload)
+            .then((res) => {
+                if(res.data){
+                    console.log(res.data[0].experiences);
+                    setAllExperiences(res.data[0].experiences)
+                }
+            })
+  }, [])
 
   function onEachCountry (country, layer, map) {
     
