@@ -57,13 +57,12 @@ export function DisplayPosition({ map, bounds }) {
   )
 }
 
-export function DisplayMap({setSingleCountry, isBigScreen, token}) {
+export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperiences, setSelectedExperiences}) {
 
   const [map, setMap] = useState(null)
   const [bounds, setBounds] = useState(null)
   const [selected, setSelected] = useState(null)
-  const [allExperiences, setAllExperiences] = useState(null)
-  const [selectedExperiences, setSelectedExperiences] = useState(null)
+
   const prevSelected = usePrevious(selected)
 
   const stableReset = useStableCallback(resetColor)
@@ -87,7 +86,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, token}) {
               .then((res) => {
                   if(res.data){
                       console.log(res.data[0].experiences);
-                      setSelectedExperiences(res.data[0].experiences)
+                      setSelectedExperiences(res.data[0].experiences[selected.feature.properties.ADMIN])
                   }
               })
             }

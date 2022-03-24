@@ -2,29 +2,29 @@ import { Col, Row } from "react-bootstrap";
 import { MainContent } from "../global/mapStyles";
 import { DisplayMap } from "../global/leafletMap";
 import { Sidebar } from "../global/sidebar";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from 'react-responsive'
 
 export function Main ({token, logout}) {
 
-    // useEffect(()=>{
-    //     console.log(token);
-    //     if(!token) navigate("/");
-    //   }, [])
-
     const isBigScreen = useMediaQuery({ query: '(min-width: 768px)' })
 
     const [singleCountry, setSingleCountry] = useState(null)
+    const [allExperiences, setAllExperiences] = useState(null)
+    const [selectedExperiences, setSelectedExperiences] = useState(null)
+
+    useEffect(() => {
+        console.log(selectedExperiences)
+    },[selectedExperiences])
 
     return (
         <>
         <Row>
             <Col>
-                <Sidebar singleCountry={singleCountry} logout={logout} token={token}/>
+                <Sidebar singleCountry={singleCountry} logout={logout} token={token} selectedExperiences={selectedExperiences} allExperiences={allExperiences}/>
             </Col>
             <MainContent>
-                <DisplayMap setSingleCountry={setSingleCountry} isBigScreen={isBigScreen} token={token}/>
+                <DisplayMap setSingleCountry={setSingleCountry} setAllExperiences={setAllExperiences} setSelectedExperiences={setSelectedExperiences} allExperiences={allExperiences} isBigScreen={isBigScreen} token={token}/>
             </MainContent>
         </Row>
         </>

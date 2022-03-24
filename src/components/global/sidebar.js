@@ -10,7 +10,12 @@ import { Adder } from "../modals/addModal.js"
 
 const fetchURL = "localhost:3000";
 
-export function Sidebar({singleCountry, logout, token}) {
+export function Sidebar({singleCountry, logout, token, selectedExperiences}) {
+
+    console.log(selectedExperiences);
+    console.log(singleCountry);
+
+    if(selectedExperiences && Object.keys(selectedExperiences).length !== 0) console.log("beep")
 
     const [showRecModal, setShowRecModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
@@ -54,6 +59,17 @@ export function Sidebar({singleCountry, logout, token}) {
           setShowAddModal(true);
         }
       }, [addType]);
+
+    
+    const ExperienceLister = () => {
+        if(selectedExperiences && Object.keys(selectedExperiences).length !== 0){
+            return (
+                <p>
+                    
+                </p>
+            )
+        }
+    }
     
 
     return (
@@ -61,7 +77,7 @@ export function Sidebar({singleCountry, logout, token}) {
         <SidebarStyled>
             <h1>Welcome to GlobalizR</h1>
             {singleCountry ? <span>Currently selected: {singleCountry.properties.ADMIN} </span>: <span>Click a country to add experiences...</span>}
-            {singleCountry ? <Informer countryname={singleCountry.properties.ADMIN} token={token}/> : <p></p>}
+            {singleCountry ? <Informer countryname={singleCountry.properties.ADMIN} token={token} sele/> : <p></p>}
             {singleCountry ? <AddModal select={handleSelect} countryname={singleCountry.properties.ADMIN} token={token}/> : <span>...and to show previous ones!</span>}
             {singleCountry ? <GeneralButton onClick={() => setShowRecModal(true)}>Need ideas? Click here!</GeneralButton> : <span></span>}
             <Container>

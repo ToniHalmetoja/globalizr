@@ -1,6 +1,5 @@
 import { GenericModal, CloseModalButton, EntryForm, CenterContainer, SubmitButton, DarkModalFooter, DarkModalHeader } from './modalStyles.js'
-import { GeneralButton } from '../global/mapStyles.js';
-import { Container, ModalHeader, ModalFooter, ModalBody, Row, Col, Form } from 'react-bootstrap';
+import { ModalBody, Row, Form } from 'react-bootstrap';
 import { useState } from 'react';
 import axios from 'axios';
 
