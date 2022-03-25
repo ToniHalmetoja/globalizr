@@ -57,7 +57,7 @@ export function DisplayPosition({ map, bounds }) {
   )
 }
 
-export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperiences, setSelectedExperiences}) {
+export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperiences, setSelectedExperiences, allExperiences}) {
 
   const [map, setMap] = useState(null)
   const [bounds, setBounds] = useState(null)
@@ -67,11 +67,57 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
 
   const stableReset = useStableCallback(resetColor)
 
-  const countryStyle = {
-    weight:1,
-    fillColor: "#263750",
-    color: "#3284f8"
+  console.log(allExperiences)
+
+  function countryStyle(countryName) {
+
+
+    if(allExperiences){
+    console.log(countryName)
+    let calculatedColor = [0,0,0];
+    let keys = Object.keys(allExperiences);
+
+    for(let i=0;i<keys.length;i++){
+      if(keys[i] === countryName){
+          if(allExperiences[keys[i]].persons){
+            calculatedColor[0] =+ allExperiences[keys[i]].persons.length * 10;
+          }
+          if(allExperiences[keys[i]].visits){
+            calculatedColor[1] =+ allExperiences[keys[i]].visits.length * 10;
+          }
+          if(allExperiences[keys[i]].books){
+            calculatedColor[2] =+ allExperiences[keys[i]].books.length * 10;
+          }
+          if(allExperiences[keys[i]].dishes){
+            calculatedColor[0] =+ allExperiences[keys[i]].books.length * 5;
+            calculatedColor[1] =+ allExperiences[keys[i]].books.length * 5;
+            calculatedColor[2] =+ allExperiences[keys[i]].books.length * 5;
+          }
+          
+      }
+      
+    }
+
+
+    return {
+      weight:1,
+      fillColor: `rgb(${calculatedColor[0]}, ${calculatedColor[1]}, ${calculatedColor[2]})`,
+      color: `rgb(${calculatedColor[0]}, ${calculatedColor[1]}, ${calculatedColor[2]})`
+    }
   }
+
+  else{
+    return {
+      weight:1,
+      fillColor: "#263750",
+      color: "#3284f8"
+    }
+  }
+
+
+  }
+
+ 
 
   useEffect(() => {
     if(prevSelected && selected !== prevSelected){
@@ -108,6 +154,8 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
   function onEachCountry (country, layer, map) {
     
     const countryName = country.properties.ADMIN;
+
+    layer.setStyle(countryStyle(country.properties.ADMIN))
     layer.on('mouseover', function () {
       this.setStyle({
         'weight' : 2,
@@ -140,7 +188,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
 
    function resetColor(e) {
      if(selected !== e.target){
-      e.target.setStyle(countryStyle);
+      e.target.setStyle(countryStyle());
     }
    }
 

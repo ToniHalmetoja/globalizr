@@ -84,3 +84,10 @@ position: absolute;
 bottom:1em;
 left:40%;    
 `
+
+export const InfoParagraph = styled.p`
+margin-bottom: 0;
+margin-top: 0;
+font-size: 0.8em;
+`
+

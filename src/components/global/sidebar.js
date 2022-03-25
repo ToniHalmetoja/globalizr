@@ -12,28 +12,9 @@ const fetchURL = "localhost:3000";
 
 export function Sidebar({singleCountry, logout, token, selectedExperiences}) {
 
-    console.log(selectedExperiences);
-    console.log(singleCountry);
-
-    if(selectedExperiences && Object.keys(selectedExperiences).length !== 0) console.log("beep")
-
     const [showRecModal, setShowRecModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
     const [addType, setAddType] = useState("");
-
-    /* Fetch content for this from DB, render out. Prevent user from selecting new until fetch complete? */
-
-    useEffect(() => {
-        axios.post('http://localhost:3000/ping', {
-            firstName: 'Finn',
-            lastName: 'Williams'
-          })
-          .then((response) => {
-            console.log(response);
-          }, (error) => {
-            console.log(error);
-          });
-    },[])
     
     function handleSelect(e){
         switch(e.target.value){
@@ -58,26 +39,14 @@ export function Sidebar({singleCountry, logout, token, selectedExperiences}) {
         if (addType !== "") {
           setShowAddModal(true);
         }
-      }, [addType]);
-
-    
-    const ExperienceLister = () => {
-        if(selectedExperiences && Object.keys(selectedExperiences).length !== 0){
-            return (
-                <p>
-                    
-                </p>
-            )
-        }
-    }
-    
+      }, [addType]);   
 
     return (
     <>
         <SidebarStyled>
             <h1>Welcome to GlobalizR</h1>
             {singleCountry ? <span>Currently selected: {singleCountry.properties.ADMIN} </span>: <span>Click a country to add experiences...</span>}
-            {singleCountry ? <Informer countryname={singleCountry.properties.ADMIN} token={token} sele/> : <p></p>}
+            {singleCountry ? <Informer countryname={singleCountry.properties.ADMIN} token={token} selectedExperiences={selectedExperiences}/> : <p></p>}
             {singleCountry ? <AddModal select={handleSelect} countryname={singleCountry.properties.ADMIN} token={token}/> : <span>...and to show previous ones!</span>}
             {singleCountry ? <GeneralButton onClick={() => setShowRecModal(true)}>Need ideas? Click here!</GeneralButton> : <span></span>}
             <Container>
