@@ -68,14 +68,15 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
   const stableReset = useStableCallback(resetColor)
 
   function countryStyle(countryName) {
-
-
     if(allExperiences){
+
     let calculatedColor = [0,0,0];
     let keys = Object.keys(allExperiences);
+    let found = false;
 
     for(let i=0;i<keys.length;i++){
-      if(keys[i] === countryName){
+      if(keys[i] === countryName.properties.ADMIN){
+        found = true;
           if(allExperiences[keys[i]].persons){
             calculatedColor[0] =+ allExperiences[keys[i]].persons.length * 10;
           }
@@ -90,17 +91,31 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
             calculatedColor[1] =+ allExperiences[keys[i]].books.length * 5;
             calculatedColor[2] =+ allExperiences[keys[i]].books.length * 5;
           }
+          calculatedColor[0] = calculatedColor[0].toString(16)
+          calculatedColor[1] = calculatedColor[1].toString(16)
+          calculatedColor[1] = calculatedColor[1].toString(16)
+
+
           
       }
       
     }
 
-
-    return {
-      weight:1,
-      fillColor: `rgb(${calculatedColor[0]}, ${calculatedColor[1]}, ${calculatedColor[2]})`,
-      color: `rgb(${calculatedColor[0]}, ${calculatedColor[1]}, ${calculatedColor[2]})`
+    if(found = true){
+      return {
+        weight:1,
+        fillColor: `#${calculatedColor[0]}${calculatedColor[1]}${calculatedColor[2]}`,
+        color: `#000`
+      }
     }
+    else {
+      return {
+        weight:1,
+        fillColor: "#263750",
+        color: "#3284f8"
+      }
+    }
+  
   }
 
   else{
@@ -115,8 +130,6 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
   }
 
   useEffect(() => {
-    console.log(selected)
-    console.log(prevSelected)
     if(prevSelected && selected !== prevSelected){
       stableReset(prevSelected)
     }
@@ -150,7 +163,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
     
     const countryName = country.properties.ADMIN;
 
-    layer.setStyle(countryStyle(country.properties.ADMIN))
+    layer.setStyle(countryStyle(country))
     layer.on('mouseover', function () {
       this.setStyle({
         'weight' : 2,
@@ -159,7 +172,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
       });
     });
     layer.on('mouseout', function (e) {
-      stableReset(e.target)
+      stableReset(e, e.target.feature)
     });
     layer.on('click', function (e) {
       this.setStyle({
@@ -181,11 +194,10 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
     });
    }
 
-   function resetColor(e) {
-     if(selected !== e){
-      e.setStyle(countryStyle());
+   function resetColor(e, target) {
+      if(selected !== e){
+        e.target.setStyle(countryStyle(target));
       }
-    // if(prevSelected !== selected) prevSelected.setStyle(countryStyle())
    }
 
 
