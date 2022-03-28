@@ -67,13 +67,10 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
 
   const stableReset = useStableCallback(resetColor)
 
-  console.log(allExperiences)
-
   function countryStyle(countryName) {
 
 
     if(allExperiences){
-    console.log(countryName)
     let calculatedColor = [0,0,0];
     let keys = Object.keys(allExperiences);
 
@@ -117,11 +114,11 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
 
   }
 
- 
-
   useEffect(() => {
+    console.log(selected)
+    console.log(prevSelected)
     if(prevSelected && selected !== prevSelected){
-      prevSelected.setStyle(countryStyle)
+      stableReset(prevSelected)
     }
     if(selected){ 
       let payload = {
@@ -131,7 +128,6 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
       axios.post(`http://localhost:3000/getone`, payload)
               .then((res) => {
                   if(res.data){
-                      console.log(res.data[0].experiences);
                       setSelectedExperiences(res.data[0].experiences[selected.feature.properties.ADMIN])
                   }
               })
@@ -145,7 +141,6 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
     axios.post(`http://localhost:3000/getall`, payload)
             .then((res) => {
                 if(res.data){
-                    console.log(res.data[0].experiences);
                     setAllExperiences(res.data[0].experiences)
                 }
             })
@@ -164,7 +159,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
       });
     });
     layer.on('mouseout', function (e) {
-      stableReset(e)
+      stableReset(e.target)
     });
     layer.on('click', function (e) {
       this.setStyle({
@@ -187,9 +182,10 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
    }
 
    function resetColor(e) {
-     if(selected !== e.target){
-      e.target.setStyle(countryStyle());
-    }
+     if(selected !== e){
+      e.setStyle(countryStyle());
+      }
+    // if(prevSelected !== selected) prevSelected.setStyle(countryStyle())
    }
 
 

@@ -13,10 +13,6 @@ export function Main ({token, logout}) {
     const [allExperiences, setAllExperiences] = useState(null)
     const [selectedExperiences, setSelectedExperiences] = useState(null)
 
-    useEffect(() => {
-        console.log(selectedExperiences)
-    },[selectedExperiences])
-
     return (
         <>
         <Row>
