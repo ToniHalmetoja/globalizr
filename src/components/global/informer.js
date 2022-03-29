@@ -8,9 +8,9 @@ export const Informer = ({countryname, selectedExperiences}) => {
             return (
                 <>
                     {selectedExperiences.persons ? <InfoParagraph>People met: {selectedExperiences.persons.length}</InfoParagraph> : <span></span>}
-                    {selectedExperiences.visits ? <InfoParagraph>Times visited: {selectedExperiences.persons.length}</InfoParagraph> : <span></span>}
-                    {selectedExperiences.books ? <InfoParagraph>Books read: {selectedExperiences.persons.length}</InfoParagraph> : <span></span>}
-                    {selectedExperiences.dishes ? <InfoParagraph>Dishes tried: {selectedExperiences.persons.length}</InfoParagraph> : <span></span>}
+                    {selectedExperiences.visits ? <InfoParagraph>Times visited: {selectedExperiences.visits.length}</InfoParagraph> : <span></span>}
+                    {selectedExperiences.books ? <InfoParagraph>Books read: {selectedExperiences.books.length}</InfoParagraph> : <span></span>}
+                    {selectedExperiences.dishes ? <InfoParagraph>Dishes tried: {selectedExperiences.dishes.length}</InfoParagraph> : <span></span>}
                 </>
             )
         }

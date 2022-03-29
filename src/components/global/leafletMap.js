@@ -62,6 +62,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
   const [map, setMap] = useState(null)
   const [bounds, setBounds] = useState(null)
   const [selected, setSelected] = useState(null)
+  const [previous, setPrevious] = useState(null)
 
   const prevSelected = usePrevious(selected)
 
@@ -87,13 +88,13 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
             calculatedColor[2] =+ allExperiences[keys[i]].books.length * 10;
           }
           if(allExperiences[keys[i]].dishes){
-            calculatedColor[0] =+ allExperiences[keys[i]].books.length * 5;
-            calculatedColor[1] =+ allExperiences[keys[i]].books.length * 5;
-            calculatedColor[2] =+ allExperiences[keys[i]].books.length * 5;
+            calculatedColor[0] =+ allExperiences[keys[i]].dishes.length * 5;
+            calculatedColor[1] =+ allExperiences[keys[i]].dishes.length * 5;
+            calculatedColor[2] =+ allExperiences[keys[i]].dishes.length * 5;
           }
           calculatedColor[0] = calculatedColor[0].toString(16)
           calculatedColor[1] = calculatedColor[1].toString(16)
-          calculatedColor[1] = calculatedColor[1].toString(16)
+          calculatedColor[2] = calculatedColor[2].toString(16)
 
 
           
@@ -130,9 +131,9 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
   }
 
   useEffect(() => {
-    if(prevSelected && selected !== prevSelected){
-      stableReset(prevSelected)
-    }
+    // if(prevSelected && selected !== prevSelected){
+    //   stableReset(prevSelected)
+    // }
     if(selected){ 
       let payload = {
         "user":localStorage.getItem("usertoken"),
@@ -180,24 +181,30 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
       });
       var bounds = [e.target.getBounds()];
       setBounds(bounds)
+      if(selected) setPrevious(selected)
       setSelected(e.target);
       setSingleCountry(e.target.feature);
     });
   }
 
-  function highlightFeature(e) {
-    this.setStyle({
-    weight: 5,
-    color: '#666',
-    dashArray: '',
-    fillOpacity: 0.7
-    });
+  function test(prop) {
+    // console.log(prop)
    }
 
+   useEffect(() => {
+  }, [previous])
+
    function resetColor(e, target) {
-      if(selected !== e){
-        e.target.setStyle(countryStyle(target));
-      }
+
+      
+    if(selected){
+      if(selected.feature.properties.ADMIN !== e.target.feature.properties.ADMIN){
+          e.target.setStyle(countryStyle(target));
+        }
+    }
+    else{
+      e.target.setStyle(countryStyle(target));
+    }
    }
 
 
