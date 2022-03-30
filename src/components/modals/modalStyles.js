@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Container, Col, FormSelect, Modal, Form, Button } from "react-bootstrap"
+import { Container, Col, FormSelect, Modal, Form, Button, Card } from "react-bootstrap"
 import { XSquareFill, XLg } from 'react-bootstrap-icons'
 
 export const RecommendationModal = styled(Modal)`
@@ -48,6 +48,15 @@ background-color:#1d2026;
 
 export const DarkModalHeader = styled(Modal.Header)`
 background-color:#1d2026;
+`
+
+export const CustomCard = styled(Card)`
+    align-items:center;
+    justify-content: center;
+    margin-bottom:5px;
+    background-color:#282c34;
+    color:white;
+ 
 `
 
 export const CloseModalButton = styled(XLg)`

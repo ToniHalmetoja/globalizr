@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState} from 'react'
-import { MapContainer, GeoJSON } from 'react-leaflet'
+import { MapContainer, GeoJSON, TileLayer } from 'react-leaflet'
 
 import { usePrevious } from "../functions/usePrevious"
 import { useStableCallback } from '../functions/useStableCalllback'
@@ -57,7 +57,7 @@ export function DisplayPosition({ map, bounds }) {
   )
 }
 
-export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperiences, setSelectedExperiences, allExperiences}) {
+export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperiences, setSelectedExperiences, allExperiences, success}) {
 
   const [map, setMap] = useState(null)
   const [bounds, setBounds] = useState(null)
@@ -77,24 +77,49 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
 
     for(let i=0;i<keys.length;i++){
       if(keys[i] === countryName.properties.ADMIN){
-        found = true;
+
           if(allExperiences[keys[i]].persons){
-            calculatedColor[0] =+ allExperiences[keys[i]].persons.length * 10;
+            calculatedColor[0] += allExperiences[keys[i]].persons.length * 50;
+            found = true;
           }
           if(allExperiences[keys[i]].visits){
-            calculatedColor[1] =+ allExperiences[keys[i]].visits.length * 10;
+            calculatedColor[1] += allExperiences[keys[i]].visits.length * 50;
+            found = true;
           }
           if(allExperiences[keys[i]].books){
-            calculatedColor[2] =+ allExperiences[keys[i]].books.length * 10;
+            calculatedColor[2] += allExperiences[keys[i]].books.length * 50;
+            found = true;
           }
           if(allExperiences[keys[i]].dishes){
-            calculatedColor[0] =+ allExperiences[keys[i]].dishes.length * 5;
-            calculatedColor[1] =+ allExperiences[keys[i]].dishes.length * 5;
-            calculatedColor[2] =+ allExperiences[keys[i]].dishes.length * 5;
+            calculatedColor[0] += allExperiences[keys[i]].dishes.length * 25;
+            calculatedColor[1] += allExperiences[keys[i]].dishes.length * 25;
+            calculatedColor[2] += allExperiences[keys[i]].dishes.length * 25;
+            found = true;
           }
+
+          /*Gold for max everything*/
+
+          if(calculatedColor[0] > 200 && calculatedColor[1] > 200 && calculatedColor[2] > 200){
+            return {
+              weight:1,
+              fillColor: `#d4af37`,
+              color: `#000`
+            }
+          }
+
           calculatedColor[0] = calculatedColor[0].toString(16)
+          if (calculatedColor[0].length < 2) {
+            calculatedColor[0] = "0" + calculatedColor[0];
+          }
           calculatedColor[1] = calculatedColor[1].toString(16)
+          if (calculatedColor[1].length < 2) {
+            calculatedColor[1] = "0" + calculatedColor[1];
+          }
           calculatedColor[2] = calculatedColor[2].toString(16)
+          if (calculatedColor[2].length < 2) {
+            calculatedColor[2] = "0" + calculatedColor[2];
+          }
+
 
 
           
@@ -102,7 +127,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
       
     }
 
-    if(found = true){
+    if(found == true){
       return {
         weight:1,
         fillColor: `#${calculatedColor[0]}${calculatedColor[1]}${calculatedColor[2]}`,
@@ -113,7 +138,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
       return {
         weight:1,
         fillColor: "#263750",
-        color: "#3284f8"
+        color: "#000"
       }
     }
   
@@ -149,16 +174,22 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
   }, [selected])
 
   useEffect(() => {
+    console.log(success)
     let payload = {
       "user":localStorage.getItem("usertoken"),
     }
     axios.post(`http://localhost:3000/getall`, payload)
             .then((res) => {
                 if(res.data){
+                  console.log("beep")
                     setAllExperiences(res.data[0].experiences)
                 }
             })
-  }, [])
+  }, [success])
+
+  useEffect(() => {
+
+  }, [allExperiences])
 
   function onEachCountry (country, layer, map) {
     
@@ -168,20 +199,15 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
     layer.on('mouseover', function () {
       this.setStyle({
         'weight' : 2,
-        'color' : "#ffffff",
-        'fillColor': '#ffffff'
+        'color' : "#bbbbbb",
       });
     });
     layer.on('mouseout', function (e) {
       stableReset(e, e.target.feature)
     });
     layer.on('click', function (e) {
-      this.setStyle({
-        'fillColor': '#ffffff'
-      });
       var bounds = [e.target.getBounds()];
       setBounds(bounds)
-      if(selected) setPrevious(selected)
       setSelected(e.target);
       setSingleCountry(e.target.feature);
     });
@@ -195,48 +221,18 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
   }, [previous])
 
    function resetColor(e, target) {
-
-      
-    if(selected){
-      if(selected.feature.properties.ADMIN !== e.target.feature.properties.ADMIN){
-          e.target.setStyle(countryStyle(target));
-        }
-    }
-    else{
       e.target.setStyle(countryStyle(target));
-    }
    }
-
-
-      function countryColor(d) {
-        return d > 1000000 ? '#016c59' :
-            d > 100000 ? '#1c9099' :
-            d > 10000 ? '#67a9cf' :
-            d > 1000 ? '#bdc9e1' :
-            d > 100 ? '#f6eff7' :
-            'white';
-    }
-
-    function style(feature) {
-        return {
-            weight: 2,
-            opacity: 1,
-            color: 'white',
-            dashArray: '3',
-            fillOpacity: 0.5,
-            fillColor: countryColor(feature.properties.wineConsumption)
-        };
-    }
 
   const displayMap = useMemo(
     () => (
       <MapContainer center={center} zoom={zoom} whenCreated={setMap} zoomSnap="0.2" minZoom="2.4" maxZoom="6">
-        {/* <TileLayer
+        <TileLayer
             attribution = {attribution}
             maxZoom="18"
             id="mapbox.light"
             url={mapboxLink}
-        /> */}
+        />
         {map ? <GeoJSON style={countryStyle} data={countries.features} onEachFeature={onEachCountry} map={map}/> : <GeoJSON style={countryStyle} data={countries.features} onEachFeature={onEachCountry}/>}
       </MapContainer>
     ),

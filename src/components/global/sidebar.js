@@ -10,7 +10,7 @@ import { Adder } from "../modals/addModal.js"
 
 const fetchURL = "localhost:3000";
 
-export function Sidebar({singleCountry, logout, token, selectedExperiences}) {
+export function Sidebar({singleCountry, logout, token, selectedExperiences, setSuccess}) {
 
     const [showRecModal, setShowRecModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
@@ -47,14 +47,15 @@ export function Sidebar({singleCountry, logout, token, selectedExperiences}) {
             <h1>Welcome to GlobalizR</h1>
             {singleCountry ? <span>Currently selected: {singleCountry.properties.ADMIN} </span>: <span>Click a country to add experiences...</span>}
             {singleCountry ? <Informer countryname={singleCountry.properties.ADMIN} token={token} selectedExperiences={selectedExperiences}/> : <p></p>}
-            {singleCountry ? <AddModal select={handleSelect} countryname={singleCountry.properties.ADMIN} token={token}/> : <span>...and to show previous ones!</span>}
-            {singleCountry ? <GeneralButton onClick={() => setShowRecModal(true)}>Need ideas? Click here!</GeneralButton> : <span></span>}
+            {singleCountry ? <AddModal select={handleSelect} countryname={singleCountry.properties.ADMIN} token={token} /> : <span>...and to show previous ones!</span>}
+            {singleCountry ? <GeneralButton onClick={() => setShowRecModal(true)}>Need recipe ideas? Click here!</GeneralButton> : <span></span>}
+            <p style={{fontSize:"0.5em"}}>Recipe recommendations available for a selection of countries, including Thailand, the USA and others!</p>
             <Container>
                 <LogoutButton variant="danger" onClick={() => logout()}>Log Out!</LogoutButton>
             </Container>
         </SidebarStyled>
         {showRecModal ? <Recommender countryname={singleCountry.properties.ADMIN} cancel={()=>setShowRecModal(false)}/> : <span></span>}
-        {showAddModal ? <Adder countryname={singleCountry.properties.ADMIN} type={addType} cancel={()=>setShowAddModal(false)}/> : <span></span>}
+        {showAddModal ? <Adder countryname={singleCountry.properties.ADMIN} type={addType} cancel={()=>setShowAddModal(false)} setSuccess={setSuccess}/> : <span></span>}
 
     </>
     )

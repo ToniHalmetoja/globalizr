@@ -12,15 +12,16 @@ export function Main ({token, logout}) {
     const [singleCountry, setSingleCountry] = useState(null)
     const [allExperiences, setAllExperiences] = useState(null)
     const [selectedExperiences, setSelectedExperiences] = useState(null)
+    const [success, setSuccess] = useState(0)
 
     return (
         <>
         <Row>
             <Col>
-                <Sidebar singleCountry={singleCountry} logout={logout} token={token} selectedExperiences={selectedExperiences} allExperiences={allExperiences}/>
+                <Sidebar singleCountry={singleCountry} logout={logout} token={token} selectedExperiences={selectedExperiences} allExperiences={allExperiences} setSuccess={setSuccess}/>
             </Col>
             <MainContent>
-                <DisplayMap setSingleCountry={setSingleCountry} setAllExperiences={setAllExperiences} setSelectedExperiences={setSelectedExperiences} allExperiences={allExperiences} isBigScreen={isBigScreen} token={token}/>
+                <DisplayMap setSingleCountry={setSingleCountry} setAllExperiences={setAllExperiences} setSelectedExperiences={setSelectedExperiences} allExperiences={allExperiences} isBigScreen={isBigScreen} token={token} success={success}/>
             </MainContent>
         </Row>
         </>

@@ -3,15 +3,15 @@ import { ModalBody, Row, Form } from 'react-bootstrap';
 import { useState } from 'react';
 import axios from 'axios';
 
-export const Adder = ({countryname, type, cancel, token}) => {
+export const Adder = ({countryname, type, cancel, token, setSuccess}) => {
 
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
     const [text, setText] = useState("");
-    const [failure, setFailure] = useState(false);
-    const [success, setSuccess] = useState(false);
+    const [failureText, setFailureText] = useState(0);
+    const [successText, setSuccessText] = useState(0);
 
     function submitNewExperience(evt){
         evt.preventDefault();
@@ -65,11 +65,12 @@ export const Adder = ({countryname, type, cancel, token}) => {
             axios.post(`http://localhost:3000/add`, payload)
             .then((res) => {
                 if(res.data === "OK!"){
-                    setSuccess(true)
+                    setSuccessText(successText+1)
+                    setSuccess(successText+1)
                 }
             })
         }
-        else{setFailure(true)}
+        else{setFailureText(failureText+1)}
             
 
     }
@@ -133,8 +134,8 @@ export const Adder = ({countryname, type, cancel, token}) => {
                 
             </ModalBody>
             <DarkModalFooter className="text-center d-flex justify-content-center">
-                {failure ? <span>Please fill in all fields!</span> : <h1></h1>}
-                {success ? <><span>Your experience was successfully added!</span><span>Add another or close the modal.</span></> : <h1></h1>}
+                {failureText ? <span>Please fill in all fields!</span> : <h1></h1>}
+                {successText ? <><span>Your experience was successfully added!</span><span>Add another or close the modal.</span></> : <h1></h1>}
             </DarkModalFooter>
         </GenericModal>
     )
