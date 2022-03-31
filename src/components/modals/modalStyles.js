@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Container, Col, FormSelect, Modal, Form, Button, Card } from "react-bootstrap"
-import { XSquareFill, XLg } from 'react-bootstrap-icons'
+import { XSquareFill, XLg, X } from 'react-bootstrap-icons'
 
 export const RecommendationModal = styled(Modal)`
     margin-top:1em;
@@ -38,6 +38,9 @@ export const GenericModal = styled(Modal)`
                 display:flex;
                 justify-content:center;
             }
+            .bold{
+                font-weight:bold;
+            }
         }
     }
 `
@@ -69,6 +72,17 @@ export const CloseModalButton = styled(XLg)`
     &:hover{
         font-weight:bolder;
         color:white;
+    }
+
+`
+
+export const RemoveExperienceButton = styled(X)`
+    color:#ffffff;
+    font-size:2em;
+    cursor:pointer;
+    &:hover{
+        font-weight:bolder;
+        color:red;
     }
 
 `

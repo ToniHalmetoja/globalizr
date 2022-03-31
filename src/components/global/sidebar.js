@@ -7,13 +7,15 @@ import { AddModal } from "./modalLauncher.js"
 import { Informer } from "./informer.js"
 import { Recommender } from "../modals/recommenderModal.js"
 import { Adder } from "../modals/addModal.js"
+import { Detailer } from "../modals/detailModal.js"
 
 const fetchURL = "localhost:3000";
 
-export function Sidebar({singleCountry, logout, token, selectedExperiences, setSuccess}) {
+export function Sidebar({singleCountry, logout, token, selectedExperiences, setSuccess, allExperiences}) {
 
     const [showRecModal, setShowRecModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
+    const [showDetModal, setShowDetModal] = useState(false);
     const [addType, setAddType] = useState("");
     
     function handleSelect(e){
@@ -46,7 +48,7 @@ export function Sidebar({singleCountry, logout, token, selectedExperiences, setS
         <SidebarStyled>
             <h1>Welcome to GlobalizR</h1>
             {singleCountry ? <span>Currently selected: {singleCountry.properties.ADMIN} </span>: <span>Click a country to add experiences...</span>}
-            {singleCountry ? <Informer countryname={singleCountry.properties.ADMIN} token={token} selectedExperiences={selectedExperiences}/> : <p></p>}
+            {singleCountry ? <Informer countryname={singleCountry.properties.ADMIN} token={token} selectedExperiences={selectedExperiences} setShowDetModal={setShowDetModal}/> : <p></p>}
             {singleCountry ? <AddModal select={handleSelect} countryname={singleCountry.properties.ADMIN} token={token} /> : <span>...and to show previous ones!</span>}
             {singleCountry ? <GeneralButton onClick={() => setShowRecModal(true)}>Need recipe ideas? Click here!</GeneralButton> : <span></span>}
             <p style={{fontSize:"0.5em"}}>Recipe recommendations available for a selection of countries, including Thailand, the USA and more!</p>
@@ -56,6 +58,7 @@ export function Sidebar({singleCountry, logout, token, selectedExperiences, setS
         </SidebarStyled>
         {showRecModal ? <Recommender countryname={singleCountry.properties.ADMIN} cancel={()=>setShowRecModal(false)}/> : <span></span>}
         {showAddModal ? <Adder countryname={singleCountry.properties.ADMIN} type={addType} cancel={()=>setShowAddModal(false)} setSuccess={setSuccess}/> : <span></span>}
+        {showDetModal ? <Detailer countryname={singleCountry.properties.ADMIN} selectedExperiences ={selectedExperiences} cancel={()=>setShowDetModal(false)}/> : <span></span>}
 
     </>
     )
