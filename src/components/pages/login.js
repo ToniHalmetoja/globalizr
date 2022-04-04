@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { Container, Button, Form } from "react-bootstrap";
+import { Container, Button, Form, Row } from "react-bootstrap";
 import { LoginForm, LoginButton } from "./loginStyles";
 import { Registerer } from "../modals/registrationModal";
 import axios from "axios";
@@ -20,6 +20,7 @@ export const Login = ({setToken}) => {
         }
         axios.post(`http://localhost:3000/users/login`, loginInfo)
             .then((res) => {
+                console.log(res.data)
                 setToken(res.data.id)
             })
     }
@@ -42,13 +43,18 @@ export const Login = ({setToken}) => {
                         Password
                     </Form.Label>
                     <LoginForm type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-
+                    <Row className="d-flex justify-content-around">
                     <LoginButton type="submit">Login!</LoginButton>
+
+                    <LoginButton variant="success" type="button" onClick={() => setShowRegModal(true)}>Register</LoginButton>
+                    </Row> 
                 </Form>
             </Container>
-            <Button variant="success" onClick={() => setShowRegModal(true)}>Register</Button>
-            {regSuccess ? <span>Registration successful! Log in with your new details!</span> : <span></span>}
+           
+        
         </Container>
+        {regSuccess ? <span>Registration successful! Log in with your new details!</span> : <span></span>} 
+
         {showRegModal ? <Registerer cancel={()=>setShowRegModal(false)} setRegSuccess={setRegSuccess}/> : <span></span>}
 
         </>

@@ -1,5 +1,5 @@
 import { GenericModal, CloseModalButton, DarkModalFooter, DarkModalHeader, CustomCard, RemoveExperienceButton } from './modalStyles.js'
-import { ModalBody, Form, Container} from 'react-bootstrap';
+import { ModalBody, Form, Container, Row} from 'react-bootstrap';
 import { LoginForm, LoginButton } from '../pages/loginStyles.js';
 import { useState } from 'react';
 import axios from 'axios';
@@ -8,6 +8,7 @@ export const Registerer = ({setRegSuccess, cancel}) => {
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [fail, setFail] = useState(false);
 
     function login (evt) {
         evt.preventDefault();
@@ -16,21 +17,21 @@ export const Registerer = ({setRegSuccess, cancel}) => {
             "password": password
         }
         axios.post(`http://localhost:3000/users/register`, regInfo)
+            .catch(function (error) {
+                if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+                setFail(true);
+                }
+            })
             .then((res) => {
                 setRegSuccess(true)
+                cancel();
             })
     }
-
-
-    const Dishes = ({dishes}) => (
-        <CustomCard>
-            <p>You've eaten:</p>
-            {dishes.map((dish, index) => (
-                <div style={{textAlign:"center"}} key={`d${index}`} id={`d${index}`}><span className="bold">{dish.name} <RemoveExperienceButton/></span>
-                 <p>Recipe: {dish.recipe}</p> on {dish.date}</div>
-            ))}
-        </CustomCard>
-    );
 
     return (
         <GenericModal show={true}>
@@ -50,10 +51,14 @@ export const Registerer = ({setRegSuccess, cancel}) => {
                             Password
                         </Form.Label>
                         <LoginForm type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-
-                        <LoginButton type="submit">Login!</LoginButton>
+                        <Row className="d-flex justify-content-around">
+                            <LoginButton variant="success" type="submit">Register!</LoginButton>
+                        </Row>
                     </Form>
                 </Container>
+                <Container>
+                {fail ? <span>Please enter appropriate information! Username probably already exists!</span> : <span></span>}
+                </Container>    
             </ModalBody>
         <DarkModalFooter className="text-center d-flex justify-content-center">
             

@@ -174,14 +174,12 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
   }, [selected])
 
   useEffect(() => {
-    console.log(success)
     let payload = {
       "user":localStorage.getItem("usertoken"),
     }
     axios.post(`http://localhost:3000/getall`, payload)
             .then((res) => {
-                if(res.data){
-                  console.log("beep")
+                if(res.data[0]){
                     setAllExperiences(res.data[0].experiences)
                 }
             })
