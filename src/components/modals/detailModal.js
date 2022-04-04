@@ -41,9 +41,6 @@ export const Detailer = ({countryname, cancel, selectedExperiences}) => {
         </CustomCard>
     );
 
-
-
-    console.log(selectedExperiences)
     return (
         <GenericModal show={true}>
             <DarkModalHeader className="text-center d-flex justify-content-center">

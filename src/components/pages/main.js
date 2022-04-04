@@ -24,6 +24,7 @@ export function Main ({token, logout}) {
                 <DisplayMap setSingleCountry={setSingleCountry} setAllExperiences={setAllExperiences} setSelectedExperiences={setSelectedExperiences} allExperiences={allExperiences} isBigScreen={isBigScreen} token={token} success={success}/>
             </MainContent>
         </Row>
+
         </>
     )
 }

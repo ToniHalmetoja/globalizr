@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Container, Button, Form } from "react-bootstrap";
 import { LoginForm, LoginButton } from "./loginStyles";
+import { Registerer } from "../modals/registrationModal";
 import axios from "axios";
 
 export const Login = ({setToken}) => {
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
-    // const [token, setToken] = useState();
+    const [showRegModal, setShowRegModal] = useState(false);
+    const [regSuccess, setRegSuccess] = useState(false);
 
     function login (evt) {
         evt.preventDefault();
@@ -16,7 +18,7 @@ export const Login = ({setToken}) => {
             "userName": userName,
             "password": password
         }
-        axios.post(`http://localhost:3000/login`, loginInfo)
+        axios.post(`http://localhost:3000/users/login`, loginInfo)
             .then((res) => {
                 setToken(res.data.id)
             })
@@ -25,6 +27,7 @@ export const Login = ({setToken}) => {
 
 
     return (
+        <>
         <Container>
             <h1>GlobalizR</h1>
             <h2>Your caleidoscope of experiences</h2>
@@ -43,8 +46,11 @@ export const Login = ({setToken}) => {
                     <LoginButton type="submit">Login!</LoginButton>
                 </Form>
             </Container>
-            <Button onClick={(evt) => login(evt)}>Log into GLOBALIZR!</Button>
+            <Button variant="success" onClick={() => setShowRegModal(true)}>Register</Button>
+            {regSuccess ? <span>Registration successful! Log in with your new details!</span> : <span></span>}
         </Container>
+        {showRegModal ? <Registerer cancel={()=>setShowRegModal(false)} setRegSuccess={setRegSuccess}/> : <span></span>}
 
+        </>
     )
 }
