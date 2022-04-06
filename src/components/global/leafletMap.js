@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState} from 'react'
 import { MapContainer, GeoJSON, TileLayer } from 'react-leaflet'
-
+import {easyPrint} from "leaflet-easyprint";
+import L from "leaflet"
 import { usePrevious } from "../functions/usePrevious"
 import { useStableCallback } from '../functions/useStableCalllback'
 import { ResetButton } from './mapStyles.js'
@@ -36,6 +37,13 @@ export function DisplayPosition({ map, bounds }) {
     if(bounds) map.fitBounds(bounds);
   }, [bounds])
 
+  useEffect(() => {
+    L.easyPrint({
+      title: 'My awesome print button',
+      position: 'bottomright',
+      sizeModes: ['A4Portrait', 'A4Landscape']
+    }).addTo(map);
+  },[map])
 
   const onClick = useCallback(() => {
     map.setView(center, zoom)

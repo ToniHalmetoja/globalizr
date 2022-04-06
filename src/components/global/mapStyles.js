@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Container, Col, FormSelect, Button } from "react-bootstrap"
-import { XSquareFill } from 'react-bootstrap-icons'
+import { XSquareFill, Printer } from 'react-bootstrap-icons'
 
 
 
@@ -47,6 +47,16 @@ export const ResetButton = styled(XSquareFill)`
     height:30px;
     font-size:22px;
     top: 100px;
+    left: 30px;
+    z-index:1010;
+`
+export const PrinterButton = styled(Printer)`
+    position:absolute;
+    cursor:pointer;
+    width:30px;
+    height:30px;
+    font-size:22px;
+    top: 150px;
     left: 30px;
     z-index:1010;
 `
