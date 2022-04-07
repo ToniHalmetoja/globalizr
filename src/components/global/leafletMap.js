@@ -65,12 +65,13 @@ export function DisplayPosition({ map, bounds }) {
   )
 }
 
-export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperiences, setSelectedExperiences, allExperiences, success}) {
+export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperiences, setSelectedExperiences, setDatabaseId, allExperiences, success}) {
 
   const [map, setMap] = useState(null)
   const [bounds, setBounds] = useState(null)
   const [selected, setSelected] = useState(null)
   const [previous, setPrevious] = useState(null)
+  const [keyMap, setKeyMap] = useState(Math.random())
 
   const prevSelected = usePrevious(selected)
 
@@ -164,22 +165,21 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
   }
 
   useEffect(() => {
-    // if(prevSelected && selected !== prevSelected){
-    //   stableReset(prevSelected)
-    // }
-    if(selected){ 
+    
+    if(selected && selected.target){ 
       let payload = {
         "user":localStorage.getItem("usertoken"),
-        "country":selected.feature.properties.ADMIN
+        "country":selected.target.feature.properties.ADMIN
       }
       axios.post(`http://localhost:3000/getone`, payload)
               .then((res) => {
                   if(res.data){
-                      setSelectedExperiences(res.data[0].experiences[selected.feature.properties.ADMIN])
+                      setSelectedExperiences(res.data[0].experiences[selected.target.feature.properties.ADMIN])
+                      setDatabaseId(res.data[0]._id)
                   }
               })
             }
-  }, [selected])
+  }, [selected, success])
 
   useEffect(() => {
     let payload = {
@@ -193,12 +193,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
             })
   }, [success])
 
-  useEffect(() => {
-
-  }, [allExperiences])
-
   function onEachCountry (country, layer, map) {
-    
     const countryName = country.properties.ADMIN;
 
     layer.setStyle(countryStyle(country))
@@ -214,17 +209,10 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
     layer.on('click', function (e) {
       var bounds = [e.target.getBounds()];
       setBounds(bounds)
-      setSelected(e.target);
+      setSelected(e);
       setSingleCountry(e.target.feature);
     });
   }
-
-  function test(prop) {
-    // console.log(prop)
-   }
-
-   useEffect(() => {
-  }, [previous])
 
    function resetColor(e, target) {
       e.target.setStyle(countryStyle(target));
@@ -232,17 +220,17 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
 
   const displayMap = useMemo(
     () => (
-      <MapContainer center={center} zoom={zoom} whenCreated={setMap} zoomSnap="0.2" minZoom="2.4" maxZoom="6">
+      <MapContainer key={keyMap} center={center} zoom={zoom} whenCreated={setMap} zoomSnap="0.2" minZoom="2.4" maxZoom="6">
         <TileLayer
             attribution = {attribution}
             maxZoom="18"
             id="mapbox.light"
             url={mapboxLink}
         />
-        {map ? <GeoJSON style={countryStyle} data={countries.features} onEachFeature={onEachCountry} map={map}/> : <GeoJSON style={countryStyle} data={countries.features} onEachFeature={onEachCountry}/>}
+        {map ? <GeoJSON key={keyMap} style={countryStyle} data={countries.features} onEachFeature={onEachCountry} map={map}/> : <GeoJSON style={countryStyle} data={countries.features} onEachFeature={onEachCountry}/>}
       </MapContainer>
     ),
-    [map, isBigScreen],
+    [map, isBigScreen, allExperiences, success],
   )
 
   return (

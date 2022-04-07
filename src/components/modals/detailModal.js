@@ -1,13 +1,25 @@
-import { GenericModal, CloseModalButton, EntryForm, CenterContainer, SubmitButton, DarkModalFooter, DarkModalHeader, CustomCard, RemoveExperienceButton } from './modalStyles.js'
-import { ModalBody, Card, Row, Col} from 'react-bootstrap';
+import { useState } from 'react';
+import { Confirmer } from './confirmModal.js';
+import { GenericModal, CloseModalButton, DarkModalFooter, DarkModalHeader, CustomCard, RemoveExperienceButton } from './modalStyles.js'
+import { ModalBody, Row, Col} from 'react-bootstrap';
 
-export const Detailer = ({countryname, cancel, selectedExperiences}) => {
+export const Detailer = ({countryname, cancel, selectedExperiences, databaseId, token, success, setSuccess}) => {
+
+    const [toDelete, setToDelete] = useState();
+    const [deleteType, setDeleteType] = useState();
+    const [showConfirmModal, setShowConfirmModal] = useState();
+
+    function deleteExperience(id, prop, type){
+        setToDelete(prop)
+        setDeleteType(type)
+        setShowConfirmModal(true);
+    }
 
     const Persons = ({people}) => (
         <CustomCard>
             <p>You've met:</p>
             {people.map((person, index) => (
-                <p id={`p${index}`}><span className="bold">{person.name}</span> on {person.date} <RemoveExperienceButton/></p>
+                <p key={`p${index}`} id={`p${index}`}><span className="bold">{person.name}</span> on {person.date} <RemoveExperienceButton onClick={() => deleteExperience(`p${index}`, person, "persons")}/></p>
             ))}
         </CustomCard>
     );
@@ -17,7 +29,7 @@ export const Detailer = ({countryname, cancel, selectedExperiences}) => {
         <CustomCard>
             <p>You've visited:</p>
             {visitations.map((visit, index) => (
-                <p key={`v${index}`} id={`v${index}`}><span className="bold">{visit.name}</span> on {visit.date} <RemoveExperienceButton/></p>
+                <p key={`v${index}`} id={`v${index}`}><span className="bold">{visit.name}</span> on {visit.date} <RemoveExperienceButton onClick={() => deleteExperience(`v${index}`, visit, "visits")}/></p>
             ))}
         </CustomCard>
     );
@@ -26,7 +38,7 @@ export const Detailer = ({countryname, cancel, selectedExperiences}) => {
         <CustomCard>
             <p>You've read:</p>
             {books.map((book, index) => (
-                <p key={`b${index}`} id={`b${index}`}><span className="bold">{book.title}</span> by <span className="bold">{book.author}</span> on {book.date}<RemoveExperienceButton/></p>
+                <p key={`b${index}`} id={`b${index}`}><span className="bold">{book.title}</span> by <span className="bold">{book.author}</span> on {book.date}<RemoveExperienceButton onClick={() => deleteExperience(`b${index}`, book, "books")}/></p>
             ))}
         </CustomCard>
     );
@@ -35,7 +47,7 @@ export const Detailer = ({countryname, cancel, selectedExperiences}) => {
         <CustomCard>
             <p>You've eaten:</p>
             {dishes.map((dish, index) => (
-                <div style={{textAlign:"center"}} key={`d${index}`} id={`d${index}`}><span className="bold">{dish.name} <RemoveExperienceButton/></span>
+                <div style={{textAlign:"center"}} key={`d${index}`} id={`d${index}`}><span className="bold">{dish.name} <RemoveExperienceButton onClick={() => deleteExperience(`d${index}`, dish, "dishes")}/></span>
                  <p>Recipe: {dish.recipe}</p> on {dish.date}</div>
             ))}
         </CustomCard>
@@ -63,6 +75,7 @@ export const Detailer = ({countryname, cancel, selectedExperiences}) => {
         <DarkModalFooter className="text-center d-flex justify-content-center">
             
         </DarkModalFooter>
+        {showConfirmModal ? <Confirmer cancel={()=>setShowConfirmModal(false)} doubleCancel={()=>{setShowConfirmModal(false);cancel()}} toDelete={toDelete} deleteType={deleteType} databaseId={databaseId} countryname={countryname} token={token} success={success} setSuccess={setSuccess}/> : <span></span>}
     </GenericModal>
 
     )

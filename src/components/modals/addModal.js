@@ -3,7 +3,7 @@ import { ModalBody, Row, Form } from 'react-bootstrap';
 import { useState } from 'react';
 import axios from 'axios';
 
-export const Adder = ({countryname, type, cancel, token, setSuccess}) => {
+export const Adder = ({countryname, type, cancel, token, setSuccess, success}) => {
 
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
@@ -66,7 +66,7 @@ export const Adder = ({countryname, type, cancel, token, setSuccess}) => {
             .then((res) => {
                 if(res.data === "OK!"){
                     setSuccessText(successText+1)
-                    setSuccess(successText+1)
+                    setSuccess(success+1)
                 }
             })
         }

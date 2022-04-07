@@ -45,6 +45,29 @@ export const GenericModal = styled(Modal)`
     }
 `
 
+export const LargeModal = styled(Modal)`
+    margin-top:1em;
+    width:100vw;
+    height:100vh;
+    .modal-dialog{
+        max-width: 75vw;
+        max-height: 100vh;       
+        .modal-content{
+            background-color:#282c34;
+            color:white;
+            min-width:50vw;
+            min-height:50vh !important;
+            .container{
+                display:flex;
+                justify-content:center;
+            }
+            .bold{
+                font-weight:bold;
+            }
+        }
+    }
+`
+
 export const DarkModalFooter = styled(Modal.Footer)`
 background-color:#1d2026;
 `

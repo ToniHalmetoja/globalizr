@@ -1,4 +1,4 @@
-import { GenericModal, CloseModalButton, DarkModalFooter, DarkModalHeader, CustomCard, RemoveExperienceButton } from './modalStyles.js'
+import { GenericModal, CloseModalButton, DarkModalFooter, DarkModalHeader } from './modalStyles.js'
 import { ModalBody, Form, Container, Row} from 'react-bootstrap';
 import { LoginForm, LoginButton } from '../pages/loginStyles.js';
 import { useState } from 'react';

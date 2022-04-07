@@ -11,7 +11,7 @@ import { Detailer } from "../modals/detailModal.js"
 
 const fetchURL = "localhost:3000";
 
-export function Sidebar({singleCountry, logout, token, selectedExperiences, setSuccess, allExperiences}) {
+export function Sidebar({singleCountry, logout, token, selectedExperiences, setSuccess, allExperiences, databaseId, success}) {
 
     const [showRecModal, setShowRecModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
@@ -57,8 +57,8 @@ export function Sidebar({singleCountry, logout, token, selectedExperiences, setS
             </Container>
         </SidebarStyled>
         {showRecModal ? <Recommender countryname={singleCountry.properties.ADMIN} cancel={()=>setShowRecModal(false)}/> : <span></span>}
-        {showAddModal ? <Adder countryname={singleCountry.properties.ADMIN} type={addType} cancel={()=>setShowAddModal(false)} setSuccess={setSuccess}/> : <span></span>}
-        {showDetModal ? <Detailer countryname={singleCountry.properties.ADMIN} selectedExperiences ={selectedExperiences} cancel={()=>setShowDetModal(false)}/> : <span></span>}
+        {showAddModal ? <Adder countryname={singleCountry.properties.ADMIN} type={addType} cancel={()=>setShowAddModal(false)} setSuccess={setSuccess} success={success}/> : <span></span>}
+        {showDetModal ? <Detailer countryname={singleCountry.properties.ADMIN} selectedExperiences={selectedExperiences} databaseId={databaseId} token={token} success={success} setSuccess={setSuccess} cancel={()=>setShowDetModal(false)}/> : <span></span>}
 
     </>
     )
