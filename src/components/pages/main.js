@@ -2,7 +2,7 @@ import { Col, Row } from "react-bootstrap";
 import { MainContent } from "../global/mapStyles";
 import { DisplayMap } from "../global/leafletMap";
 import { Sidebar } from "../global/sidebar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useMediaQuery } from 'react-responsive'
 
 export function Main ({token, logout}) {

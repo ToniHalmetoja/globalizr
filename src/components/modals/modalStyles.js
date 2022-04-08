@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { Container, Col, FormSelect, Modal, Form, Button, Card } from "react-bootstrap"
-import { XSquareFill, XLg, X } from 'react-bootstrap-icons'
+import { Container, Modal, Form, Button, Card } from "react-bootstrap"
+import { XLg, X } from 'react-bootstrap-icons'
 
 export const RecommendationModal = styled(Modal)`
     margin-top:1em;

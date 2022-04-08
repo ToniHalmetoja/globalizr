@@ -1,6 +1,6 @@
-import { GenericModal, CloseModalButton, DarkModalFooter, DarkModalHeader, LargeModal, CustomCard } from './modalStyles.js'
-import { ModalBody, Form, Container, Card} from 'react-bootstrap';
-import { LoginForm, LoginButton } from '../pages/loginStyles.js';
+import { CloseModalButton, DarkModalFooter, DarkModalHeader, LargeModal, CustomCard } from './modalStyles.js'
+import { ModalBody, Form, Container } from 'react-bootstrap';
+import { LoginButton } from '../pages/loginStyles.js';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
