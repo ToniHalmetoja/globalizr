@@ -24,12 +24,14 @@ export const Registerer = ({setRegSuccess, cancel}) => {
                 console.log(error.response.data);
                 console.log(error.response.status);
                 console.log(error.response.headers);
-                setFail(true);
+                setFail(error.response);
                 }
             })
             .then((res) => {
-                setRegSuccess(true)
-                cancel();
+                if(res){
+                    setRegSuccess(true)
+                    cancel();
+                }
             })
     }
 
@@ -57,7 +59,7 @@ export const Registerer = ({setRegSuccess, cancel}) => {
                     </Form>
                 </Container>
                 <Container>
-                {fail ? <span>Please enter appropriate information! Username probably already exists!</span> : <span></span>}
+                {fail ? <span>Registration failed. Code {fail.status} - {fail.data}</span> : <span></span>} 
                 </Container>    
             </ModalBody>
         <DarkModalFooter className="text-center d-flex justify-content-center">
