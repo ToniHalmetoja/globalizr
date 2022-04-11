@@ -61,15 +61,14 @@ export const Detailer = ({countryname, cancel, selectedExperiences, databaseId, 
             </DarkModalHeader>
             <ModalBody>
                 <Row>
-                    <Col>
+                    {selectedExperiences.persons || selectedExperiences.visits ? <Col>
                         {selectedExperiences.persons ? <Persons people={selectedExperiences.persons}/> : <p></p>}
                         {selectedExperiences.visits ? <Visits visitations={selectedExperiences.visits}/> : <p></p>}
-                    </Col>
-                    <Col>
+                    </Col>: <p></p>}
+                    {selectedExperiences.books || selectedExperiences.dishes ? <Col>
                         {selectedExperiences.books ? <Books books={selectedExperiences.books}/> : <p></p>}
                         {selectedExperiences.dishes ? <Dishes dishes={selectedExperiences.dishes}/> : <p></p>}
-
-                    </Col>
+                    </Col>: <p></p>}
                 </Row>
             </ModalBody>
         <DarkModalFooter className="text-center d-flex justify-content-center">

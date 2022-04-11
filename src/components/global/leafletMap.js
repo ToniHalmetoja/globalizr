@@ -85,21 +85,27 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
       if(keys[i] === countryName.properties.ADMIN){
 
           if(allExperiences[keys[i]].persons){
-            calculatedColor[0] += allExperiences[keys[i]].persons.length * 50;
+            calculatedColor[0] += allExperiences[keys[i]].persons.length * 75;
+            if(calculatedColor[0] > 255) calculatedColor[0] = 255;
             found = true;
           }
           if(allExperiences[keys[i]].visits){
-            calculatedColor[1] += allExperiences[keys[i]].visits.length * 50;
+            calculatedColor[1] += allExperiences[keys[i]].visits.length * 75;
+            if(calculatedColor[1] > 255) calculatedColor[1] = 255;
             found = true;
           }
           if(allExperiences[keys[i]].books){
-            calculatedColor[2] += allExperiences[keys[i]].books.length * 50;
+            calculatedColor[2] += allExperiences[keys[i]].books.length * 75;
+            if(calculatedColor[2] > 255) calculatedColor[2] = 255;
             found = true;
           }
           if(allExperiences[keys[i]].dishes){
             calculatedColor[0] += allExperiences[keys[i]].dishes.length * 25;
             calculatedColor[1] += allExperiences[keys[i]].dishes.length * 25;
             calculatedColor[2] += allExperiences[keys[i]].dishes.length * 25;
+            if(calculatedColor[0] > 255) calculatedColor[0] = 255;
+            if(calculatedColor[1] > 255) calculatedColor[1] = 255;
+            if(calculatedColor[2] > 255) calculatedColor[2] = 255;
             found = true;
           }
 

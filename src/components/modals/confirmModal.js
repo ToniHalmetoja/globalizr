@@ -50,7 +50,7 @@ export const Confirmer = ({cancel, toDelete, deleteType, databaseId, countryname
                 <Container className="d-flex justify-content-center">
                     <Form onSubmit={(e) => deleteExperience(e)}>
                         <LoginButton variant="success" type="submit">Yes, delete it</LoginButton>
-                        <LoginButton variant="danger" type="submit" onClick={() => deleteExperience()}>No, I changed my mind</LoginButton>
+                        <LoginButton variant="danger" type="button" onClick={() => doubleCancel()}>No, I changed my mind</LoginButton>
                     </Form>
                 </Container>
                 <Container>

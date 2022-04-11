@@ -11,6 +11,7 @@ export const Login = ({setToken}) => {
     const [password, setPassword] = useState("");
     const [showRegModal, setShowRegModal] = useState(false);
     const [regSuccess, setRegSuccess] = useState(false);
+    const [fail, setFail] = useState(false);
 
     function login (evt) {
         evt.preventDefault();
@@ -19,9 +20,19 @@ export const Login = ({setToken}) => {
             "password": password
         }
         axios.post(`http://localhost:3000/users/login`, loginInfo)
+            .catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                    setFail(error.response);
+                }
+            })
             .then((res) => {
-                console.log(res.data)
-                setToken(res.data.id)
+                if(res){
+                    console.log(res.data)
+                    setToken(res.data.id)
+                }
             })
     }
 
@@ -53,7 +64,10 @@ export const Login = ({setToken}) => {
            
         
         </Container>
-        {regSuccess ? <span>Registration successful! Log in with your new details!</span> : <span></span>} 
+        <Container>
+            {regSuccess ? <span>Registration successful! Log in with your new details!</span> : <span></span>} 
+        {fail ? <span>Login failed. Code {fail.status} - {fail.data}</span> : <span></span>} 
+        </Container>
 
         {showRegModal ? <Registerer cancel={()=>setShowRegModal(false)} setRegSuccess={setRegSuccess}/> : <span></span>}
 

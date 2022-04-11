@@ -53,7 +53,10 @@ export function Sidebar({singleCountry, logout, token, selectedExperiences, setS
             {singleCountry ? <AddModal select={handleSelect} countryname={singleCountry.properties.ADMIN} token={token} /> : <span>...and to show previous ones!</span>}
             {singleCountry ? <GeneralButton onClick={() => setShowRecModal(true)}>Need recipe ideas? Click here!</GeneralButton> : <span></span>}
             </Container>
-            <Container><p style={{fontSize:"0.5em"}}>Recipe recommendations available for a selection of countries, including Thailand, the USA and more!</p></Container>
+            <Container>
+                <p style={{fontSize:"0.5em"}}>Recipe recommendations available for a selection of countries, including Thailand, the USA and more!</p>
+                <p style={{fontSize:"0.5em"}}>Get three experiences of each kind to gild a country!</p>
+            </Container>
             <Container>
                 <LogoutButton variant="danger" onClick={() => logout()}>Log Out!</LogoutButton>
             </Container>
