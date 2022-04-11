@@ -46,12 +46,14 @@ export function Sidebar({singleCountry, logout, token, selectedExperiences, setS
     return (
     <>
         <SidebarStyled>
+            <Container>
             <h1>Welcome to GlobalizR</h1>
             {singleCountry ? <span>Currently selected: {singleCountry.properties.ADMIN} </span>: <span>Click a country to add experiences...</span>}
             {singleCountry ? <Informer countryname={singleCountry.properties.ADMIN} token={token} selectedExperiences={selectedExperiences} setShowDetModal={setShowDetModal}/> : <p></p>}
             {singleCountry ? <AddModal select={handleSelect} countryname={singleCountry.properties.ADMIN} token={token} /> : <span>...and to show previous ones!</span>}
             {singleCountry ? <GeneralButton onClick={() => setShowRecModal(true)}>Need recipe ideas? Click here!</GeneralButton> : <span></span>}
-            <p style={{fontSize:"0.5em"}}>Recipe recommendations available for a selection of countries, including Thailand, the USA and more!</p>
+            </Container>
+            <Container><p style={{fontSize:"0.5em"}}>Recipe recommendations available for a selection of countries, including Thailand, the USA and more!</p></Container>
             <Container>
                 <LogoutButton variant="danger" onClick={() => logout()}>Log Out!</LogoutButton>
             </Container>

@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useState} from 'react'
 import { MapContainer, GeoJSON, TileLayer } from 'react-leaflet'
 import {easyPrint} from "leaflet-easyprint";
 import L from "leaflet"
-import { usePrevious } from "../functions/usePrevious"
 import { useStableCallback } from '../functions/useStableCalllback'
 import { ResetButton } from './mapStyles.js'
 
@@ -72,8 +71,6 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
   const [selected, setSelected] = useState(null)
   const [previous, setPrevious] = useState(null)
   const [keyMap, setKeyMap] = useState(Math.random())
-
-  const prevSelected = usePrevious(selected)
 
   const stableReset = useStableCallback(resetColor)
 

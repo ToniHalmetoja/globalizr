@@ -7,19 +7,17 @@ import { XSquareFill, Printer } from 'react-bootstrap-icons'
 export const MainContent = styled(Col)`
 
     margin-left:1vw;
-    @media (min-width: 768px) {
-        margin-left: 0;
-    }
 
     .map-container{
+        height:100%;
         .leaflet-container{
-            margin-left:0;
             border:3px solid black;
             background-color: #232324;
             height:95vh;
             width:95vw;
-            @media (min-width: 768px) {
+            @media (min-width: 1200px) {
                 width:70vw;
+                height:95vh;
             }
         }
     }
@@ -27,16 +25,15 @@ export const MainContent = styled(Col)`
 `
 
 export const SidebarStyled = styled(Container)`
-    margin-left:1vw;
     border: 3px solid black;
-    width: 95vw;
-    height: 50vh;
+    width: 100vw;
     margin-bottom: 1vh;
-    @media (min-width: 768px) {
+    margin-top: 1vh;
+    @media (min-width: 1200px) {
         margin-left:0;
-        height:95vh;
-        width:20vw;
+        max-width:25vw;
         margin-bottom: 0;
+        margin-top:0;
       }
     `
 
@@ -72,6 +69,7 @@ export const SearchForm = styled(FormSelect)`
     background-color: black;
     color: #aaaaaa;
     font-size: 0.8em;
+    max-width:90%;
 `
 
 export const InformationBox = styled(Container)`
@@ -90,9 +88,8 @@ margin-top:1em;
 
 export const LogoutButton = styled(Button)`
 margin-top:1em;
-position: absolute;
-bottom:1em;
-left:40%;    
+position: relative;
+bottom:1em;  
 `
 
 export const InfoParagraph = styled.p`
