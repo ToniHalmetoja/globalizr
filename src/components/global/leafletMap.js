@@ -161,7 +161,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
     return {
       weight:1,
       fillColor: "#263750",
-      color: "#3284f8"
+      color: "#000"
     }
   }
 
