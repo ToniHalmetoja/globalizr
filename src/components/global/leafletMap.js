@@ -31,6 +31,8 @@ const zoom = 2.4
 
 export function DisplayPosition({ map, bounds }) {
 
+  map.setMaxBounds(map.getBounds());
+  
   useEffect(() => {
     if(bounds) map.fitBounds(bounds);
   }, [bounds, map])
@@ -126,6 +128,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, se
         color: `#000`
       }
     }
+
     else {
       return {
         weight:1,
@@ -198,7 +201,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, se
 
   const displayMap = useMemo(
     () => (
-      <MapContainer key={keyMap} center={center} zoom={zoom} whenCreated={setMap} zoomSnap="0.2" minZoom="2.4" maxZoom="6">
+      <MapContainer key={keyMap} center={center} zoom={zoom} whenCreated={setMap} zoomSnap="0.2" minZoom="2.4" maxZoom="6" maxBoundsViscosity="1.0">
         <TileLayer
             attribution = {attribution}
             maxZoom="18"
