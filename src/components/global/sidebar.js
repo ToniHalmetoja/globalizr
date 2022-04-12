@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react"
-import axios from "axios"
-
 import { Container } from "react-bootstrap"
 import { SidebarStyled, GeneralButton, LogoutButton } from "./mapStyles.js"
 import { AddModal } from "./modalLauncher.js"
@@ -8,8 +6,6 @@ import { Informer } from "./informer.js"
 import { Recommender } from "../modals/recommenderModal.js"
 import { Adder } from "../modals/addModal.js"
 import { Detailer } from "../modals/detailModal.js"
-
-const fetchURL = "localhost:3000";
 
 export function Sidebar({singleCountry, logout, token, selectedExperiences, setSuccess, allExperiences, databaseId, success}) {
 
@@ -50,7 +46,7 @@ export function Sidebar({singleCountry, logout, token, selectedExperiences, setS
             <h1>Welcome to GlobalizR</h1>
             {singleCountry ? <span>Currently selected: {singleCountry.properties.ADMIN} </span>: <span>Click a country to add experiences...</span>}
             {singleCountry ? <Informer countryname={singleCountry.properties.ADMIN} token={token} selectedExperiences={selectedExperiences} setShowDetModal={setShowDetModal}/> : <p></p>}
-            {singleCountry ? <AddModal select={handleSelect} countryname={singleCountry.properties.ADMIN} token={token} /> : <span>...and to show previous ones!</span>}
+            {singleCountry ? <AddModal select={handleSelect} countryname={singleCountry.properties.ADMIN} /> : <span>...and to show previous ones!</span>}
             {singleCountry ? <GeneralButton onClick={() => setShowRecModal(true)}>Need recipe ideas? Click here!</GeneralButton> : <span></span>}
             </Container>
             <Container>

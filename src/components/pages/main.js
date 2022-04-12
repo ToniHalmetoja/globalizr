@@ -29,7 +29,6 @@ export function Main ({token, logout}) {
                 setDatabaseId={setDatabaseId}
                 allExperiences={allExperiences} 
                 isBigScreen={isBigScreen} 
-                token={token} 
                 success={success}
                 />
             </MainContent>

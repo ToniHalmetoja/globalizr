@@ -8,23 +8,24 @@ export const Registerer = ({setRegSuccess, cancel}) => {
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [password2, setPassword2] = useState("");
     const [fail, setFail] = useState(false);
 
     function login (evt) {
         evt.preventDefault();
         let regInfo = {
             "userName": userName,
-            "password": password
+            "password": password,
+            "password2": password2
         }
+        if(password2 === password){
         axios.post(`http://localhost:3000/users/register`, regInfo)
             .catch(function (error) {
                 if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-                setFail(error.response);
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                    setFail(error.response);
                 }
             })
             .then((res) => {
@@ -33,6 +34,11 @@ export const Registerer = ({setRegSuccess, cancel}) => {
                     cancel();
                 }
             })
+        }
+        else{
+            let error = {data:"Passwords do not match!", status:"418"}
+            setFail(error);
+        }
     }
 
     return (
@@ -53,6 +59,10 @@ export const Registerer = ({setRegSuccess, cancel}) => {
                             Password
                         </Form.Label>
                         <LoginForm type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                        <Form.Label>
+                            Confirm password
+                        </Form.Label>
+                        <LoginForm type="password" placeholder="Password" onChange={(e) => setPassword2(e.target.value)} />
                         <Row className="d-flex justify-content-around">
                             <LoginButton variant="success" type="submit">Register!</LoginButton>
                         </Row>

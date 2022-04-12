@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useMemo, useState} from 'react'
+import { useEffect, useMemo, useState} from 'react'
 import { MapContainer, GeoJSON, TileLayer } from 'react-leaflet'
-import {easyPrint} from "leaflet-easyprint";
+// eslint-disable-next-line
+import easyPrint from "leaflet-easyprint"; /*This is, in fact, used - VSC is wrong */
 import L from "leaflet"
 import { useStableCallback } from '../functions/useStableCalllback'
 import { ResetButton } from './mapStyles.js'
@@ -30,11 +31,9 @@ const zoom = 2.4
 
 export function DisplayPosition({ map, bounds }) {
 
-  const [position, setPosition] = useState(map.getCenter())
-
   useEffect(() => {
     if(bounds) map.fitBounds(bounds);
-  }, [bounds])
+  }, [bounds, map])
 
   useEffect(() => {
     L.easyPrint({
@@ -44,33 +43,17 @@ export function DisplayPosition({ map, bounds }) {
     }).addTo(map);
   },[map])
 
-  const onClick = useCallback(() => {
-    map.setView(center, zoom)
-  }, [map])
-
-  const onMove = useCallback(() => {
-    setPosition(map.getCenter())
-  }, [map])
-
-  useEffect(() => {
-    map.on('move', onMove)
-    return () => {
-      map.off('move', onMove)
-    }
-  }, [map, onMove])
-
   return (
     <></>
   )
 }
 
-export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperiences, setSelectedExperiences, setDatabaseId, allExperiences, success}) {
+export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, setSelectedExperiences, setDatabaseId, allExperiences, success}) {
 
   const [map, setMap] = useState(null)
   const [bounds, setBounds] = useState(null)
   const [selected, setSelected] = useState(null)
-  const [previous, setPrevious] = useState(null)
-  const [keyMap, setKeyMap] = useState(Math.random())
+  const keyMap = useState(Math.random())
 
   const stableReset = useStableCallback(resetColor)
 
@@ -80,6 +63,8 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
     let calculatedColor = [0,0,0];
     let keys = Object.keys(allExperiences);
     let found = false;
+
+    /*Below, the chosen color is calculated. If the number exceeds max (255) it's simply set to 255 to prevent errors*/
 
     for(let i=0;i<keys.length;i++){
       if(keys[i] === countryName.properties.ADMIN){
@@ -113,7 +98,6 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
 
           if(calculatedColor[0] > 200 && calculatedColor[1] > 200 && calculatedColor[2] > 200){
             return {
-              weight:1,
               fillColor: `#d4af37`,
               color: `#d4af37`,
               weight: 2
@@ -131,16 +115,11 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
           calculatedColor[2] = calculatedColor[2].toString(16)
           if (calculatedColor[2].length < 2) {
             calculatedColor[2] = "0" + calculatedColor[2];
-          }
-
-
-
-          
+          }         
       }
-      
     }
 
-    if(found == true){
+    if(found === true){
       return {
         weight:1,
         fillColor: `#${calculatedColor[0]}${calculatedColor[1]}${calculatedColor[2]}`,
@@ -154,18 +133,15 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
         color: "#000"
       }
     }
-  
   }
 
   else{
     return {
-      weight:1,
-      fillColor: "#263750",
-      color: "#000"
+        weight:1,
+        fillColor: "#263750",
+        color: "#000"
+      }
     }
-  }
-
-
   }
 
   useEffect(() => {
@@ -177,13 +153,13 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
       }
       axios.post(`http://localhost:3000/getone`, payload)
               .then((res) => {
-                  if(res.data){
+                  if(res.data[0]){
                       setSelectedExperiences(res.data[0].experiences[selected.target.feature.properties.ADMIN])
                       setDatabaseId(res.data[0]._id)
                   }
               })
             }
-  }, [selected, success])
+  }, [selected, success, setDatabaseId, setSelectedExperiences])
 
   useEffect(() => {
     let payload = {
@@ -195,11 +171,9 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
                     setAllExperiences(res.data[0].experiences)
                 }
             })
-  }, [success])
+  }, [success, setAllExperiences])
 
-  function onEachCountry (country, layer, map) {
-    const countryName = country.properties.ADMIN;
-
+  function onEachCountry (country, layer) {
     layer.setStyle(countryStyle(country))
     layer.on('mouseover', function () {
       this.setStyle({
@@ -233,8 +207,8 @@ export function DisplayMap({setSingleCountry, isBigScreen, token, setAllExperien
         />
         {map ? <GeoJSON key={keyMap} style={countryStyle} data={countries.features} onEachFeature={onEachCountry} map={map}/> : <GeoJSON style={countryStyle} data={countries.features} onEachFeature={onEachCountry}/>}
       </MapContainer>
-    ),
-    [map, isBigScreen, allExperiences, success],
+    ), // eslint-disable-next-line
+    [map, success, countryStyle, keyMap, onEachCountry], // "success" is what forces the component to rerender when new data has been added, linter is wrong.
   )
 
   return (

@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { Container, Button, Form, Row } from "react-bootstrap";
+import { useState } from "react";
+import { Container, Form, Row } from "react-bootstrap";
 import { LoginForm, LoginButton } from "./loginStyles";
 import { Registerer } from "../modals/registrationModal";
 import axios from "axios";
@@ -26,6 +25,7 @@ export const Login = ({setToken}) => {
                     console.log(error.response.status);
                     console.log(error.response.headers);
                     setFail(error.response);
+                    setRegSuccess(false);
                 }
             })
             .then((res) => {
@@ -66,7 +66,7 @@ export const Login = ({setToken}) => {
         </Container>
         <Container>
             {regSuccess ? <span>Registration successful! Log in with your new details!</span> : <span></span>} 
-        {fail ? <span>Login failed. Code {fail.status} - {fail.data}</span> : <span></span>} 
+            {fail ? <span>Login failed. Code {fail.status} - {fail.data}</span> : <span></span>} 
         </Container>
 
         {showRegModal ? <Registerer cancel={()=>setShowRegModal(false)} setRegSuccess={setRegSuccess}/> : <span></span>}

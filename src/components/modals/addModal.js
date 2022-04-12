@@ -3,7 +3,7 @@ import { ModalBody, Row, Form } from 'react-bootstrap';
 import { useState } from 'react';
 import axios from 'axios';
 
-export const Adder = ({countryname, type, cancel, token, setSuccess, success}) => {
+export const Adder = ({countryname, type, cancel, setSuccess, success}) => {
 
     const [name, setName] = useState("");
     const [date, setDate] = useState("");
@@ -134,8 +134,8 @@ export const Adder = ({countryname, type, cancel, token, setSuccess, success}) =
                 
             </ModalBody>
             <DarkModalFooter className="text-center d-flex justify-content-center">
-                {failureText ? <span>Please fill in all fields!</span> : <h1></h1>}
-                {successText ? <><span>Your experience was successfully added!</span><span>Add another or close the modal.</span></> : <h1></h1>}
+                {failureText ? <span>Please fill in all fields!</span> : <span></span>}
+                {successText ? <><span>Your experience was successfully added!</span><span>Add another or close the modal.</span></> : <span></span>}
             </DarkModalFooter>
         </GenericModal>
     )
