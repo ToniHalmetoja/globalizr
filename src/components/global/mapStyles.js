@@ -26,7 +26,7 @@ export const MainContent = styled(Col)`
 
 export const SidebarStyled = styled(Container)`
     border: 3px solid black;
-    width: 100vw;
+    width: 95vw;
     margin-bottom: 1vh;
     margin-top: 1vh;
     @media (min-width: 1200px) {

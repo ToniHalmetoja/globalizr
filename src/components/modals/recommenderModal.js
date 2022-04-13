@@ -1,14 +1,12 @@
 import { RecommendationModal, CloseModalButton, CustomCard } from './modalStyles.js'
 import { GeneralButton } from '../global/mapStyles.js';
-import { Container, ModalHeader, ModalFooter, ModalBody, Row, Col, Card } from 'react-bootstrap';
+import { ModalHeader, ModalFooter, ModalBody } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export const Recommender = ({countryname, cancel}) => {
 
-    const [experiences, setExperiences] = useState([]);
     const [foodRec, setFoodRec] = useState([])
-    
 
     useEffect(() => {
 
@@ -61,7 +59,7 @@ export const Recommender = ({countryname, cancel}) => {
         }
 
         if(country !== ""){
-            axios.post(`http://localhost:3000/recommendations/getdish`, {cuisine:country})
+            axios.post(`https://globalizrbackend.herokuapp.com/recommendations/getdish`, {cuisine:country})
             .then((res) => {
                 if(res.data.recipes){
                 setFoodRec([res.data.recipes[0].title, res.data.recipes[0].summary,res.data.recipes[0].image, res.data.recipes[0].spoonacularSourceUrl])
@@ -90,7 +88,7 @@ export const Recommender = ({countryname, cancel}) => {
             </ModalHeader>
             <ModalBody>
                 <CustomCard>
-                {foodRec[2] ? <img src={foodRec[2]}></img> : <p>No image provided.</p>}
+                {foodRec[2] ? <img src={foodRec[2]} alt={foodRec[0]}></img> : <p>No image provided.</p>}
                 </CustomCard>
                 <CustomCard>
                     {foodRec[0] ? <p dangerouslySetInnerHTML={{ __html: foodRec[0]}}></p> : <p>No recommendations for this country yet. :(</p>}

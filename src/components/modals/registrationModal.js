@@ -19,7 +19,7 @@ export const Registerer = ({setRegSuccess, cancel}) => {
             "password2": password2
         }
         if(password2 === password){
-        axios.post(`http://localhost:3000/users/register`, regInfo)
+        axios.post(`https://globalizrbackend.herokuapp.com/users/register`, regInfo)
             .catch(function (error) {
                 if (error.response) {
                     console.log(error.response.data);

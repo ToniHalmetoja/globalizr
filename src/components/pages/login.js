@@ -18,7 +18,7 @@ export const Login = ({setToken}) => {
             "userName": userName,
             "password": password
         }
-        axios.post(`http://localhost:3000/users/login`, loginInfo)
+        axios.post(`https://globalizrbackend.herokuapp.com/users/login`, loginInfo)
             .catch(function (error) {
                 if (error.response) {
                     console.log(error.response.data);

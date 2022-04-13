@@ -31,7 +31,7 @@ const zoom = 2.4
 
 export function DisplayPosition({ map, bounds }) {
 
-  map.setMaxBounds(map.getBounds());
+  map.setMaxBounds([[-90,-180], [90,180]]);
   
   useEffect(() => {
     if(bounds) map.fitBounds(bounds);
@@ -154,7 +154,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, se
         "user":localStorage.getItem("usertoken"),
         "country":selected.target.feature.properties.ADMIN
       }
-      axios.post(`http://localhost:3000/getone`, payload)
+      axios.post(`https://globalizrbackend.herokuapp.com/getone`, payload)
               .then((res) => {
                   if(res.data[0]){
                       setSelectedExperiences(res.data[0].experiences[selected.target.feature.properties.ADMIN])
@@ -168,7 +168,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, se
     let payload = {
       "user":localStorage.getItem("usertoken"),
     }
-    axios.post(`http://localhost:3000/getall`, payload)
+    axios.post(`https://globalizrbackend.herokuapp.com/getall`, payload)
             .then((res) => {
                 if(res.data[0]){
                     setAllExperiences(res.data[0].experiences)

@@ -24,10 +24,11 @@ export const RecommendationModal = styled(Modal)`
 
 export const GenericModal = styled(Modal)`
     margin-top:1em;
-    width:100vw;
+    left:5%;
+    width:90vw;
     height:100vh;
     .modal-dialog{
-        max-width: 50vw;
+        max-width: 95vw;
         max-height: 95vh;       
         .modal-content{
             background-color:#282c34;
@@ -42,6 +43,30 @@ export const GenericModal = styled(Modal)`
                 font-weight:bold;
             }
         }
+    }
+
+    @media (min-width: 1200px) {
+        margin-top:1em;
+        width:100vw;
+        height:100vh;
+        .modal-dialog{
+            max-width: 50vw;
+            max-height: 95vh;       
+            .modal-content{
+                background-color:#282c34;
+                color:white;
+                min-width:25vw;
+                min-height:25vh !important;
+                .container{
+                    display:flex;
+                    justify-content:center;
+                }
+                .bold{
+                    font-weight:bold;
+                }
+            }
+        }
+
     }
 `
 
@@ -120,7 +145,13 @@ export const EntryForm = styled(Form.Control)`
 
 export const CenterContainer = styled(Container)`
     display:flex;
-    justify-content:center;
+    justify-content:space-around;
+`
+
+export const CenterContainerButtons = styled(Container)`
+    display:flex;
+    justify-content:center !important;
+    margin-left:5px;
 `
 
 

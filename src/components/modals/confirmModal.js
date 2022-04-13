@@ -10,10 +10,10 @@ export const Confirmer = ({cancel, toDelete, deleteType, databaseId, countryname
     const [elaborateMessage, setElaborateMessage] = useState("");
 
     useEffect(() => {
-    if(deleteType==="persons"){
-        setElaborateMessage("Meeting " + toDelete.name + " on the " + toDelete.date)
-    }
-    },[]);  
+        if(deleteType==="persons"){
+            setElaborateMessage("Meeting " + toDelete.name + " on the " + toDelete.date)
+        }
+    },[deleteType, toDelete]);  
 
     function deleteExperience (evt) {
         evt.preventDefault();
@@ -23,7 +23,7 @@ export const Confirmer = ({cancel, toDelete, deleteType, databaseId, countryname
             "toDelete": toDelete,
             "country": countryname
         }
-        axios.post(`http://localhost:3000/delete`, delInfo)
+        axios.post(`https://globalizrbackend.herokuapp.com/delete`, delInfo)
             .catch(function (error) {
                 if (error.response) {
                     console.log(error.response.data);
@@ -57,7 +57,7 @@ export const Confirmer = ({cancel, toDelete, deleteType, databaseId, countryname
                 </Container>    
             </ModalBody>
         <DarkModalFooter className="text-center d-flex justify-content-center">
-            
+        {fail ? <span>Failed to add. Likely a server error! {fail.status} - {fail.data}</span> : <span></span>} 
         </DarkModalFooter>
     </LargeModal>
 

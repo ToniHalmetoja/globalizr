@@ -1,4 +1,4 @@
-import { GenericModal, CloseModalButton, EntryForm, CenterContainer, SubmitButton, DarkModalFooter, DarkModalHeader } from './modalStyles.js'
+import { GenericModal, CloseModalButton, EntryForm, CenterContainer, SubmitButton, DarkModalFooter, DarkModalHeader, CenterContainerButtons} from './modalStyles.js'
 import { ModalBody, Row, Form } from 'react-bootstrap';
 import { useState } from 'react';
 import axios from 'axios';
@@ -62,7 +62,7 @@ export const Adder = ({countryname, type, cancel, setSuccess, success}) => {
         }
 
         if(valid===true){
-            axios.post(`http://localhost:3000/add`, payload)
+            axios.post(`https://globalizrbackend.herokuapp.com/add`, payload)
             .then((res) => {
                 if(res.data === "OK!"){
                     setSuccessText(successText+1)
@@ -71,8 +71,6 @@ export const Adder = ({countryname, type, cancel, setSuccess, success}) => {
             })
         }
         else{setFailureText(failureText+1)}
-            
-
     }
 
     return (
@@ -87,9 +85,10 @@ export const Adder = ({countryname, type, cancel, setSuccess, success}) => {
                     <Form onSubmit={(e) => submitNewExperience(e)}>
                         <EntryForm type="date" placeholder="Date"  onChange={(e) => setDate(e.target.value)}/>
                         <EntryForm type="text" placeholder="Name" onChange={(e) => setName(e.target.value)}/>
-                        <SubmitButton type="submit">Submit</SubmitButton>
-                        <SubmitButton variant="danger" onClick={() => cancel()}>Exit</SubmitButton>
-
+                        <CenterContainerButtons>
+                            <SubmitButton type="submit">Submit</SubmitButton>
+                            <SubmitButton variant="danger" onClick={() => cancel()}>Exit</SubmitButton>
+                        </CenterContainerButtons>
                     </Form>
                 </CenterContainer>
                 : <p></p>
@@ -99,8 +98,10 @@ export const Adder = ({countryname, type, cancel, setSuccess, success}) => {
                     <Form onSubmit={(e) => submitNewExperience(e)}>
                         <EntryForm type="date" placeholder="Date"  onChange={(e) => setDate(e.target.value)}/>
                         <EntryForm type="text" placeholder="Place name" onChange={(e) => setName(e.target.value)}/>
-                        <SubmitButton type="submit">Submit</SubmitButton>
-                        <SubmitButton variant="danger" onClick={() => cancel()}>Exit</SubmitButton>
+                        <CenterContainerButtons>
+                            <SubmitButton type="submit">Submit</SubmitButton>
+                            <SubmitButton variant="danger" onClick={() => cancel()}>Exit</SubmitButton>
+                        </CenterContainerButtons>
                     </Form>
                 </CenterContainer>
                 : <p></p>
@@ -111,9 +112,10 @@ export const Adder = ({countryname, type, cancel, setSuccess, success}) => {
                         <EntryForm type="date" placeholder="Date"  onChange={(e) => setDate(e.target.value)}/>
                         <EntryForm type="text" placeholder="Title" onChange={(e) => setTitle(e.target.value)}/>
                         <EntryForm type="text" placeholder="Author" onChange={(e) => setAuthor(e.target.value)}/>
-                        <SubmitButton type="submit">Submit</SubmitButton>
-                        <SubmitButton variant="danger" onClick={() => cancel()}>Exit</SubmitButton>
-
+                        <CenterContainerButtons>
+                            <SubmitButton type="submit">Submit</SubmitButton>
+                            <SubmitButton variant="danger" onClick={() => cancel()}>Exit</SubmitButton>
+                        </CenterContainerButtons>
                     </Form>
                 </CenterContainer>
                 : <p></p>
@@ -124,9 +126,10 @@ export const Adder = ({countryname, type, cancel, setSuccess, success}) => {
                     <Row><EntryForm type="text" placeholder="Name" onChange={(e) => setName(e.target.value)}/></Row>
                         <Row><EntryForm type="date" placeholder="Date"  onChange={(e) => setDate(e.target.value)}/></Row>
                         <Row><EntryForm as="textarea" type="text" placeholder="Recipe" cols={25} onChange={(e) => setText(e.target.value)}/></Row>
-                        <SubmitButton type="submit">Submit</SubmitButton>
-                        <SubmitButton variant="danger" onClick={() => cancel()}>Exit</SubmitButton>
-
+                        <CenterContainerButtons>
+                            <SubmitButton type="submit">Submit</SubmitButton>
+                            <SubmitButton variant="danger" onClick={() => cancel()}>Exit</SubmitButton>
+                        </CenterContainerButtons>
                     </Form>
                 </CenterContainer>
                 : <p></p>
