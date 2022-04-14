@@ -6,10 +6,9 @@ import L from "leaflet"
 import { useStableCallback } from '../functions/useStableCalllback'
 import { ResetButton } from './mapStyles.js'
 
-import axios from "axios"
+import { wineData } from '../data/countries';
 
-import countries from "../data/countries.json"
-import "./mapStyles.js"
+import axios from "axios"
 
 const mapboxLink = 'https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoidG9uaWhhbG1ldG9qYSIsImEiOiJjbDBzN2NqYWQwMXNxM2JtaDZ3OGthYWQ1In0.ALPmMcLVezZiSLWzY3sdFA';
 const attribution = `
@@ -59,6 +58,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, se
 
   const stableReset = useStableCallback(resetColor)
 
+  console.log(wineData)
   function countryStyle(countryName) {
     if(allExperiences){
 
@@ -69,7 +69,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, se
     /*Below, the chosen color is calculated. If the number exceeds max (255) it's simply set to 255 to prevent errors*/
 
     for(let i=0;i<keys.length;i++){
-      if(keys[i] === countryName.properties.ADMIN){
+      if(keys[i] === countryName.properties.name){
 
           if(allExperiences[keys[i]].persons){
             calculatedColor[0] += allExperiences[keys[i]].persons.length * 75;
@@ -152,12 +152,12 @@ export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, se
     if(selected && selected.target){ 
       let payload = {
         "user":localStorage.getItem("usertoken"),
-        "country":selected.target.feature.properties.ADMIN
+        "country":selected.target.feature.properties.name
       }
       axios.post(`https://globalizrbackend.herokuapp.com/getone`, payload)
               .then((res) => {
                   if(res.data[0]){
-                      setSelectedExperiences(res.data[0].experiences[selected.target.feature.properties.ADMIN])
+                      setSelectedExperiences(res.data[0].experiences[selected.target.feature.properties.name])
                       setDatabaseId(res.data[0]._id)
                   }
               })
@@ -208,7 +208,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, se
             id="mapbox.light"
             url={mapboxLink}
         /> */}
-        {map ? <GeoJSON key={keyMap} style={countryStyle} data={countries.features} onEachFeature={onEachCountry} map={map}/> : <GeoJSON style={countryStyle} data={countries.features} onEachFeature={onEachCountry}/>}
+        {map ? <GeoJSON key={keyMap} style={countryStyle} data={wineData.features} onEachFeature={onEachCountry} map={map}/> : <GeoJSON style={countryStyle} data={wineData.features} onEachFeature={onEachCountry}/>}
       </MapContainer>
     ), // eslint-disable-next-line
     [map, success, countryStyle, keyMap, onEachCountry], // "success" is what forces the component to rerender when new data has been added, linter is wrong.

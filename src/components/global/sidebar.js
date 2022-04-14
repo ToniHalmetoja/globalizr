@@ -44,9 +44,9 @@ export function Sidebar({singleCountry, logout, token, selectedExperiences, setS
         <SidebarStyled>
             <Container>
             <h1>Welcome to GlobalizR</h1>
-            {singleCountry ? <span>Currently selected: {singleCountry.properties.ADMIN} </span>: <span>Click a country to add experiences...</span>}
-            {singleCountry ? <Informer countryname={singleCountry.properties.ADMIN} token={token} selectedExperiences={selectedExperiences} setShowDetModal={setShowDetModal}/> : <p></p>}
-            {singleCountry ? <AddModal select={handleSelect} countryname={singleCountry.properties.ADMIN} /> : <span>...and to show previous ones!</span>}
+            {singleCountry ? <span>Currently selected: {singleCountry.properties.name} </span>: <span>Click a country to add experiences...</span>}
+            {singleCountry ? <Informer countryname={singleCountry.properties.name} token={token} selectedExperiences={selectedExperiences} setShowDetModal={setShowDetModal}/> : <p></p>}
+            {singleCountry ? <AddModal select={handleSelect} countryname={singleCountry.properties.name} /> : <span>...and to show previous ones!</span>}
             {singleCountry ? <GeneralButton onClick={() => setShowRecModal(true)}>Need recipe ideas? Click here!</GeneralButton> : <span></span>}
             </Container>
             <Container>
@@ -57,9 +57,9 @@ export function Sidebar({singleCountry, logout, token, selectedExperiences, setS
                 <LogoutButton variant="danger" onClick={() => logout()}>Log Out!</LogoutButton>
             </Container>
         </SidebarStyled>
-        {showRecModal ? <Recommender countryname={singleCountry.properties.ADMIN} cancel={()=>setShowRecModal(false)}/> : <span></span>}
-        {showAddModal ? <Adder countryname={singleCountry.properties.ADMIN} type={addType} cancel={()=>setShowAddModal(false)} setSuccess={setSuccess} success={success}/> : <span></span>}
-        {showDetModal ? <Detailer countryname={singleCountry.properties.ADMIN} selectedExperiences={selectedExperiences} databaseId={databaseId} token={token} success={success} setSuccess={setSuccess} cancel={()=>setShowDetModal(false)}/> : <span></span>}
+        {showRecModal ? <Recommender countryname={singleCountry.properties.name} cancel={()=>setShowRecModal(false)}/> : <span></span>}
+        {showAddModal ? <Adder countryname={singleCountry.properties.name} type={addType} cancel={()=>setShowAddModal(false)} setSuccess={setSuccess} success={success}/> : <span></span>}
+        {showDetModal ? <Detailer countryname={singleCountry.properties.name} selectedExperiences={selectedExperiences} databaseId={databaseId} token={token} success={success} setSuccess={setSuccess} cancel={()=>setShowDetModal(false)}/> : <span></span>}
 
     </>
     )
