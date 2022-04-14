@@ -202,12 +202,12 @@ export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, se
   const displayMap = useMemo(
     () => (
       <MapContainer key={keyMap} center={center} zoom={zoom} whenCreated={setMap} zoomSnap="0.2" minZoom="2.4" maxZoom="6" maxBoundsViscosity="1.0">
-        <TileLayer
+        {/* <TileLayer
             attribution = {attribution}
             maxZoom="18"
             id="mapbox.light"
             url={mapboxLink}
-        />
+        /> */}
         {map ? <GeoJSON key={keyMap} style={countryStyle} data={countries.features} onEachFeature={onEachCountry} map={map}/> : <GeoJSON style={countryStyle} data={countries.features} onEachFeature={onEachCountry}/>}
       </MapContainer>
     ), // eslint-disable-next-line
