@@ -1,14 +1,12 @@
 import { useEffect, useMemo, useState} from 'react'
 import { MapContainer, GeoJSON, TileLayer } from 'react-leaflet'
-// eslint-disable-next-line
-import easyPrint from "leaflet-easyprint"; /*This is, in fact, used - VSC is wrong */
 import L from "leaflet"
 import { useStableCallback } from '../functions/useStableCalllback'
 import { ResetButton } from './mapStyles.js'
 
 import axios from "axios"
 
-let countries2 = "../data/countries2.json"
+let countries2 = require("../data/countries2.json")
 
 const mapboxLink = 'https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoidG9uaWhhbG1ldG9qYSIsImEiOiJjbDBzN2NqYWQwMXNxM2JtaDZ3OGthYWQ1In0.ALPmMcLVezZiSLWzY3sdFA';
 const attribution = `
@@ -35,14 +33,6 @@ export function DisplayPosition({ map, bounds }) {
   useEffect(() => {
     if(bounds) map.fitBounds(bounds);
   }, [bounds, map])
-
-  useEffect(() => {
-    L.easyPrint({
-      title: 'My awesome print button',
-      position: 'bottomright',
-      sizeModes: ['A4Portrait', 'A4Landscape']
-    }).addTo(map);
-  },[map])
 
   return (
     <></>
