@@ -6,9 +6,9 @@ import L from "leaflet"
 import { useStableCallback } from '../functions/useStableCalllback'
 import { ResetButton } from './mapStyles.js'
 
-import { wineData } from '../data/countries';
-
 import axios from "axios"
+
+let countries2 = "../data/countries2.json"
 
 const mapboxLink = 'https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoidG9uaWhhbG1ldG9qYSIsImEiOiJjbDBzN2NqYWQwMXNxM2JtaDZ3OGthYWQ1In0.ALPmMcLVezZiSLWzY3sdFA';
 const attribution = `
@@ -58,7 +58,6 @@ export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, se
 
   const stableReset = useStableCallback(resetColor)
 
-  console.log(wineData)
   function countryStyle(countryName) {
     if(allExperiences){
 
@@ -208,7 +207,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, se
             id="mapbox.light"
             url={mapboxLink}
         /> */}
-        {map ? <GeoJSON key={keyMap} style={countryStyle} data={wineData.features} onEachFeature={onEachCountry} map={map}/> : <GeoJSON style={countryStyle} data={wineData.features} onEachFeature={onEachCountry}/>}
+        {map ? <GeoJSON key={keyMap} style={countryStyle} data={countries2.features} onEachFeature={onEachCountry} map={map}/> : <GeoJSON style={countryStyle} data={countries2.features} onEachFeature={onEachCountry}/>}
       </MapContainer>
     ), // eslint-disable-next-line
     [map, success, countryStyle, keyMap, onEachCountry], // "success" is what forces the component to rerender when new data has been added, linter is wrong.
