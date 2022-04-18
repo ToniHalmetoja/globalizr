@@ -15,3 +15,9 @@ Simple enough! You'll have to host a local MongoDB database (or their cloud). Th
 To run the simple backend (available at https://github.com/ToniHalmetoja/globalizr-backend) it's as simple as downloading it, installing all dependencies (and making sure that it connects to your MongoDB!), and then running with `npm start`
 
 To run the frontend, the process is the same. Clone the repo, install dependencies, change the URLs to connect to your self-hosted backend, and run.
+
+##Issues
+
+It's worth noting that the country polygons are a little low on detail. This is both because the free host used for the demo (Heroku) has a low memory usage limit, and additionally, Leaflet gets obscenely memory-intensive trying to render detailed borders. Ideally, were this a full app, it'd be launched with a little more detail, on a web server with some capacity.
+
+Equally worth of note is that the Spoonacular API, used for the recipe recommendations, only has recommendations for a few different countries. Just try the big cuisines (France, the US, Thailand...) and see what you get. Of course, in a full application, we'd expand this functionality, and also add some kind of recommendations for books and trips, and affiliate links for them all.
