@@ -16,7 +16,7 @@ To run the simple backend (available at https://github.com/ToniHalmetoja/globali
 
 To run the frontend, the process is the same. Clone the repo, install dependencies, change the URLs to connect to your self-hosted backend, and run.
 
-##Issues
+## Issues
 
 It's worth noting that the country polygons are a little low on detail. This is both because the free host used for the demo (Heroku) has a low memory usage limit, and additionally, Leaflet gets obscenely memory-intensive trying to render detailed borders. Ideally, were this a full app, it'd be launched with a little more detail, on a web server with some capacity.
 
