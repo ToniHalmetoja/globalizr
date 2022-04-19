@@ -4,7 +4,7 @@ import { LoginForm, LoginButton } from '../pages/loginStyles.js';
 import { useState } from 'react';
 import axios from 'axios';
 
-export const Registerer = ({setRegSuccess, cancel}) => {
+export const Registerer = ({setRegSuccess, setFailLogin, cancel}) => {
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
@@ -30,6 +30,7 @@ export const Registerer = ({setRegSuccess, cancel}) => {
             })
             .then((res) => {
                 if(res){
+                    setFailLogin(false);
                     setRegSuccess(true)
                     cancel();
                 }

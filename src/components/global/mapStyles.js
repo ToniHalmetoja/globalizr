@@ -19,8 +19,29 @@ export const MainContent = styled(Col)`
                 width:70vw;
                 height:95vh;
             }
+            .leaflet-control-container{
+                .leaflet-top{
+                    .leaflet-control-zoom{
+                        .leaflet-control-zoom-in{
+                            &:hover{
+                                background-color:#999;
+                            }
+                            &:focus{
+                                background-color:#999;
+                            }
+                        }
+                        .leaflet-control-zoom-out{
+                            &:hover{
+                                background-color:#999;
+                            }
+                            &:focus{
+                                background-color:#999;
+                            }
+                        }
+                    }
+                }
+            }
         }
-    }
 
 `
 
@@ -46,6 +67,12 @@ export const ResetButton = styled(XSquareFill)`
     top: 100px;
     left: 30px;
     z-index:1010;
+    &:hover{
+        color:#999;
+    }
+    &:focus{
+        color:#999;
+    }
 `
 export const PrinterButton = styled(Printer)`
     position:absolute;

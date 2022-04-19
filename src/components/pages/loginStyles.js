@@ -10,6 +10,11 @@ export const LoginForm = styled(Form.Control)`
 `
 
 export const LoginButton = styled(Button)`
-margin-top:1em;
-    
+    margin-top:1em;
+    background-color:#00819d;
+`
+
+export const RegisterButton = styled(Button)`
+    margin-top:1em;
+    background-color:#328641;
 `

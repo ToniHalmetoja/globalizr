@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState} from 'react'
-import { MapContainer, GeoJSON, TileLayer } from 'react-leaflet'
-import L from "leaflet"
+import { MapContainer, GeoJSON, TileLayer, ZoomControl } from 'react-leaflet'
 import { useStableCallback } from '../functions/useStableCalllback'
 import { ResetButton } from './mapStyles.js'
 
@@ -112,15 +111,15 @@ export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, se
 
     if(found === true){
       return {
-        weight:1,
+        weight: 1,
         fillColor: `#${calculatedColor[0]}${calculatedColor[1]}${calculatedColor[2]}`,
-        color: `#000`
+        color: `#000`,
       }
     }
 
     else {
       return {
-        weight:1,
+        weight: 1,
         fillColor: "#263750",
         color: "#000"
       }
@@ -129,7 +128,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, se
 
   else{
     return {
-        weight:1,
+        weight: 1,
         fillColor: "#263750",
         color: "#000"
       }
@@ -190,14 +189,17 @@ export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, se
 
   const displayMap = useMemo(
     () => (
-      <MapContainer key={keyMap} center={center} zoom={zoom} whenCreated={setMap} zoomSnap="0.2" minZoom="2.4" maxZoom="6" maxBoundsViscosity="1.0">
-        {/* <TileLayer
+      <MapContainer aria-label="World map" tabindex={0} key={keyMap} center={center} zoom={zoom} whenCreated={setMap} zoomSnap="0.2" minZoom="2.4" maxZoom="6" maxBoundsViscosity="1.0" zoomControl={false}>
+        <TileLayer
+            aria-label="Map tiles"
             attribution = {attribution}
             maxZoom="18"
             id="mapbox.light"
             url={mapboxLink}
-        /> */}
-        {map ? <GeoJSON key={keyMap} style={countryStyle} data={countries2.features} onEachFeature={onEachCountry} map={map}/> : <GeoJSON style={countryStyle} data={countries2.features} onEachFeature={onEachCountry}/>}
+        />
+        {map ? <GeoJSON key={keyMap} style={countryStyle} data={countries2.features} onEachFeature={onEachCountry} map={map} tabindex={0}/> : <GeoJSON style={countryStyle} data={countries2.features} onEachFeature={onEachCountry} tabindex={0}/>}
+        <ZoomControl aria-label="Zoom controls" tabindex={0} position='topleft' />
+
       </MapContainer>
     ), // eslint-disable-next-line
     [map, success, countryStyle, keyMap, onEachCountry], // "success" is what forces the component to rerender when new data has been added, linter is wrong.
@@ -205,7 +207,7 @@ export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, se
 
   return (
     <div className="map-container">
-      <ResetButton className="reset-button" onClick={() => map.setView(center, zoom)}>Reset map view</ResetButton>
+      <ResetButton aria-label="Reset zoom" tabIndex={0} className="reset-button" onClick={() => map.setView(center, zoom)}>Reset map view</ResetButton>
       {map ? <DisplayPosition map={map} bounds={bounds} /> : null}
       {displayMap}
     </div>

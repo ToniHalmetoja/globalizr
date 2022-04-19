@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Container, Form, Row } from "react-bootstrap";
-import { LoginForm, LoginButton } from "./loginStyles";
+import { LoginForm, LoginButton, RegisterButton } from "./loginStyles";
 import { Registerer } from "../modals/registrationModal";
 import axios from "axios";
 
@@ -56,8 +56,7 @@ export const Login = ({setToken}) => {
                     <LoginForm type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
                     <Row className="d-flex justify-content-around">
                     <LoginButton type="submit">Login!</LoginButton>
-
-                    <LoginButton variant="success" type="button" onClick={() => setShowRegModal(true)}>Register</LoginButton>
+                    <RegisterButton variant="success" type="button" onClick={() => setShowRegModal(true)}>Register</RegisterButton>
                     </Row> 
                 </Form>
             </Container>
@@ -69,7 +68,7 @@ export const Login = ({setToken}) => {
             {fail ? <span>Login failed. Code {fail.status} - {fail.data}</span> : <span></span>} 
         </Container>
 
-        {showRegModal ? <Registerer cancel={()=>setShowRegModal(false)} setRegSuccess={setRegSuccess}/> : <span></span>}
+        {showRegModal ? <Registerer cancel={()=>setShowRegModal(false)} setRegSuccess={setRegSuccess} setFailLogin={setFail}/> : <span></span>}
 
         </>
     )
