@@ -30,7 +30,6 @@ export const Login = ({setToken}) => {
             })
             .then((res) => {
                 if(res){
-                    console.log(res.data)
                     setToken(res.data.id)
                 }
             })

@@ -10,7 +10,7 @@ import { Main } from "./components/pages/main"
 
 function App() {
 
-  const [token, setToken] = useState();
+  const [token, setToken] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const navigate = useNavigate()
 
@@ -25,7 +25,7 @@ function App() {
     }
 
     setLoaded(true);
-  }, [token, navigate])
+  }, [token])
 
   function logout () {
     localStorage.removeItem("usertoken");
