@@ -67,11 +67,6 @@ export const Recommender = ({countryname, cancel}) => {
             })
         }
 
-
-
-
-
-
     }, [countryname])
 
     /* Fetch content for this from DB, render out. Prevent user from selecting new until fetch complete? */

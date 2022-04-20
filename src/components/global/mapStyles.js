@@ -2,8 +2,6 @@ import styled from "styled-components";
 import { Container, Col, FormSelect, Button } from "react-bootstrap"
 import { XSquareFill, Printer } from 'react-bootstrap-icons'
 
-
-
 export const MainContent = styled(Col)`
 
     margin-left:1vw;

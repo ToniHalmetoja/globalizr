@@ -1,7 +1,8 @@
-import logo from './logo.svg';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import './App.css';
+/* Router is in fact used, eslint is wrong */
+// eslint-disable-next-line
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Login } from "./components/pages/login"
 import { Main } from "./components/pages/main"
@@ -24,7 +25,7 @@ function App() {
     }
 
     setLoaded(true);
-  }, [token])
+  }, [token, navigate])
 
   function logout () {
     localStorage.removeItem("usertoken");

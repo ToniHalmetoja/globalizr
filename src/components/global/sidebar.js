@@ -7,7 +7,7 @@ import { Recommender } from "../modals/recommenderModal.js"
 import { Adder } from "../modals/addModal.js"
 import { Detailer } from "../modals/detailModal.js"
 
-export function Sidebar({singleCountry, logout, token, selectedExperiences, setSuccess, allExperiences, databaseId, success}) {
+export function Sidebar({singleCountry, logout, token, selectedExperiences, setSuccess, success}) {
 
     const [showRecModal, setShowRecModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
@@ -59,7 +59,7 @@ export function Sidebar({singleCountry, logout, token, selectedExperiences, setS
         </SidebarStyled>
         {showRecModal ? <Recommender countryname={singleCountry.properties.name} cancel={()=>setShowRecModal(false)}/> : <span></span>}
         {showAddModal ? <Adder countryname={singleCountry.properties.name} type={addType} cancel={()=>setShowAddModal(false)} setSuccess={setSuccess} success={success}/> : <span></span>}
-        {showDetModal ? <Detailer countryname={singleCountry.properties.name} selectedExperiences={selectedExperiences} databaseId={databaseId} token={token} success={success} setSuccess={setSuccess} cancel={()=>setShowDetModal(false)}/> : <span></span>}
+        {showDetModal ? <Detailer countryname={singleCountry.properties.name} selectedExperiences={selectedExperiences} token={token} success={success} setSuccess={setSuccess} cancel={()=>setShowDetModal(false)}/> : <span></span>}
 
     </>
     )

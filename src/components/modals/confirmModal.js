@@ -4,7 +4,7 @@ import { LoginButton } from '../pages/loginStyles.js';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export const Confirmer = ({cancel, toDelete, deleteType, databaseId, countryname, token, success, setSuccess, doubleCancel}) => {
+export const Confirmer = ({cancel, toDelete, deleteType, countryname, token, success, setSuccess, doubleCancel}) => {
 
     const [fail, setFail] = useState(false);
     const [elaborateMessage, setElaborateMessage] = useState("");

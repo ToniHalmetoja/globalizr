@@ -38,7 +38,7 @@ export function DisplayPosition({ map, bounds }) {
   )
 }
 
-export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, setSelectedExperiences, setDatabaseId, allExperiences, success}) {
+export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, setSelectedExperiences, allExperiences, success}) {
 
   const [map, setMap] = useState(null)
   const [bounds, setBounds] = useState(null)
@@ -146,11 +146,10 @@ export function DisplayMap({setSingleCountry, isBigScreen, setAllExperiences, se
               .then((res) => {
                   if(res.data[0]){
                       setSelectedExperiences(res.data[0].experiences[selected.target.feature.properties.name])
-                      setDatabaseId(res.data[0]._id)
                   }
               })
             }
-  }, [selected, success, setDatabaseId, setSelectedExperiences])
+  }, [selected, success, setSelectedExperiences])
 
   useEffect(() => {
     let payload = {

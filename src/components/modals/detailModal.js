@@ -3,7 +3,7 @@ import { Confirmer } from './confirmModal.js';
 import { GenericModal, CloseModalButton, DarkModalFooter, DarkModalHeader, CustomCard, RemoveExperienceButton } from './modalStyles.js'
 import { ModalBody, Row, Col} from 'react-bootstrap';
 
-export const Detailer = ({countryname, cancel, selectedExperiences, databaseId, token, success, setSuccess}) => {
+export const Detailer = ({countryname, cancel, selectedExperiences, token, success, setSuccess}) => {
 
     const [toDelete, setToDelete] = useState();
     const [deleteType, setDeleteType] = useState();
@@ -74,7 +74,7 @@ export const Detailer = ({countryname, cancel, selectedExperiences, databaseId, 
         <DarkModalFooter className="text-center d-flex justify-content-center">
             
         </DarkModalFooter>
-        {showConfirmModal ? <Confirmer cancel={()=>setShowConfirmModal(false)} doubleCancel={()=>{setShowConfirmModal(false);cancel()}} toDelete={toDelete} deleteType={deleteType} databaseId={databaseId} countryname={countryname} token={token} success={success} setSuccess={setSuccess}/> : <span></span>}
+        {showConfirmModal ? <Confirmer cancel={()=>setShowConfirmModal(false)} doubleCancel={()=>{setShowConfirmModal(false);cancel()}} toDelete={toDelete} deleteType={deleteType} countryname={countryname} token={token} success={success} setSuccess={setSuccess}/> : <span></span>}
     </GenericModal>
 
     )

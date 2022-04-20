@@ -1,5 +1,4 @@
 import { InformationBox, InfoParagraph, GeneralButton } from './mapStyles.js'
-import { useState } from 'react';
 
 export const Informer = ({countryname, selectedExperiences, setShowDetModal}) => {
 
