@@ -27,3 +27,11 @@ As for accessibility, unfortunately it doesn't seem that there's any possible wa
 ## Note
 
 Due to Heroku being slow and idling free websites, you will likely have to attempt to load the app a few times for the demo. This is not a problen with the code, as you can see if you run it locally; it's a problem with Heroku.
+
+# Test login
+
+You can use the app without registering by logging in as
+
+Username: tester@test.com
+
+Password: test123test
