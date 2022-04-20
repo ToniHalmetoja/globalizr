@@ -2,7 +2,7 @@
 
 A project made for class FED20D at Medieinstitutetet. 
 
-Demo at https://globalizrapp.herokuapp.com/main
+Demo at https://globalizrapp.herokuapp.com/
 
 For test login, read this document. (it's at the bottom if you'd rather not)
 
