@@ -2,6 +2,10 @@
 
 A project made for class FED20D at Medieinstitutetet. 
 
+Demo at https://globalizrapp.herokuapp.com/main
+
+For test login, read this document. (it's at the bottom if you'd rather not)
+
 ## A description
 
 GlobalizR is a tool to help the user experience the world. Beyond that, it's a simple graphical interface which allows the user to add one of four types of experiences to a country. The country's color then changes based on the input, up to a maximum of two experiences of each type, at which point it turns "golden" (but don't let this stop you from recording more experiences! The color simply stops changing). The idea is the turn all of the world map, or at least as much as possible, gold. Experiences can also be viewed and removed in the same modal.
